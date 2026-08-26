@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Somar Dois Números</title>
+    <script>
+        function somar() {
+            let valorA = document.getElementById("valorA").value;
+            let valorB = document.getElementById("valorB").value;
+
+            valorA = parseFloat(valorA);
+            valorB = parseFloat(valorB);
+
+            if (!isNaN(valorA) && !isNaN(valorB)) {
+
+                let resultado = valorA + valorB;
+
+                document.getElementById("resultado").innerText = 'A soma é: ' + resultado;
+            } else {
+                document.getElementById("resultado").innerText = 'Por favor, digite números válidos.';
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <h2>Somar Dois Números</h2>
+
+    <label for="valorA">Digite o primeiro valor:</label>
+    <input type="text" id="valorA">
+    <br>
+    <label for="valorB">Digite o segundo valor:</label>
+    <input type="text" id="valorB">
+
+    <button onclick="somar()">Somar</button>
+
+    <p id="resultado"></p>
+
+</body>
+</html>
+                    

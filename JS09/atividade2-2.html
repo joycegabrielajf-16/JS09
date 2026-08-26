@@ -1,0 +1,32 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estruturas Condicionais</title>
+</head>
+<body>
+
+    <h1>Estruturas Condicionais em JavaScript</h1>
+
+    <script>
+        let temperatura = 25;
+
+        if (temperatura > 30) {
+            document.write("<p>Está muito quente lá fora!</p>");
+        } else if ( temperatura >= 20 && temperatura <= 30) {
+            document.write("<p>O clima está agradável.</p>");
+        } else {
+            document.write("<p>Está um pouco frio lá fora.</p>");
+        }
+
+        // Operador ternário
+        let periodoDoDia = "manhã";
+        let saudacao = (periodoDoDia === "manhã") ? "Bom dia!" : "Boa tarde ou boa noite!";
+        document.write("<p>" + saudacao + "</p>");
+    </script>
+
+</body>
+</html>
+                    

@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<!-- saved from url=(0048)https://almeida-cma.github.io/js09/fixacao2.html -->
+<html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📝 Eventos DOM - Exemplos e Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            text-align: center;
+            color: #1a1a2e;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .header h1 span {
+            color: #1a1a2e;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .badge-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .badge {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 5px 16px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            color: #b8860b;
+            margin-bottom: 15px;
+            border-left: 5px solid #f7971e;
+            padding-left: 15px;
+            font-size: 1.4rem;
+        }
+
+        .card h3 {
+            color: #b8860b;
+            margin: 15px 0 10px 0;
+            font-size: 1.1rem;
+        }
+
+        .card p {
+            color: #2c3e50;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .card ul {
+            color: #2c3e50;
+            line-height: 1.8;
+            margin: 8px 0 12px 25px;
+        }
+
+        .card li {
+            margin-bottom: 4px;
+        }
+
+        /* ============================================================
+           EXEMPLOS
+           ============================================================ */
+        .exemplo {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 2px solid #dee2e6;
+            transition: all 0.3s;
+        }
+
+        .exemplo:hover {
+            border-color: #f7971e;
+        }
+
+        .exemplo .numero {
+            display: inline-block;
+            background: #f7971e;
+            color: #1a1a2e;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-weight: bold;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+
+        .exemplo .titulo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            display: inline-block;
+        }
+
+        .exemplo .evento {
+            display: inline-block;
+            background: #17a2b8;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 12px;
+            border-radius: 30px;
+            margin-left: 10px;
+            font-weight: 600;
+            vertical-align: middle;
+        }
+
+        .exemplo .descricao {
+            margin: 12px 0;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 10px;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .exemplo .descricao p {
+            margin-bottom: 4px;
+        }
+
+        .codigo-wrapper {
+            position: relative;
+            margin: 8px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #17a2b8;
+        }
+
+        .codigo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #0d1b2a;
+            padding: 6px 14px;
+            border-bottom: 1px solid #17a2b8;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .codigo-header .codigo-title {
+            color: #17a2b8;
+            font-size: 0.75rem;
+            font-weight: 600;
+            font-family: monospace;
+        }
+
+        .codigo-header .codigo-actions {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .codigo-header .codigo-actions button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 3px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .codigo-header .codigo-actions button:hover {
+            background: #218838;
+            transform: scale(1.02);
+        }
+
+        .codigo-header .codigo-actions button.run-btn {
+            background: #17a2b8;
+        }
+
+        .codigo-header .codigo-actions button.run-btn:hover {
+            background: #138496;
+        }
+
+        .codigo-html {
+            background: #1a1a2e;
+            color: #e0e0e0;
+            padding: 14px 18px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            line-height: 1.8;
+            margin: 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .codigo-html .tag {
+            color: #ff6b6b;
+        }
+        .codigo-html .attr {
+            color: #f7df1e;
+        }
+        .codigo-html .value {
+            color: #69db7c;
+        }
+        .codigo-html .comment {
+            color: #6c757d;
+            font-style: italic;
+        }
+        .codigo-html .js-keyword {
+            color: #d63384;
+            font-weight: bold;
+        }
+        .codigo-html .js-string {
+            color: #69db7c;
+        }
+        .codigo-html .js-function {
+            color: #4dabf7;
+        }
+        .codigo-html .js-number {
+            color: #fd7e14;
+        }
+        .codigo-html .js-operator {
+            color: #ff6b6b;
+        }
+        .codigo-html .js-comment {
+            color: #6c757d;
+            font-style: italic;
+        }
+        .codigo-html .js-var {
+            color: #e599f7;
+        }
+        .codigo-html .js-bracket {
+            color: #fcc419;
+        }
+        .codigo-html .js-equals {
+            color: #ff6b6b;
+        }
+
+        .copy-feedback {
+            position: absolute;
+            top: 38px;
+            right: 12px;
+            background: #28a745;
+            color: white;
+            padding: 3px 12px;
+            border-radius: 5px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .copy-feedback.show {
+            opacity: 1;
+        }
+
+        /* ============================================================
+           QUIZ
+           ============================================================ */
+        .questao {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px 18px;
+            margin-bottom: 15px;
+            border-left: 4px solid #f7971e;
+        }
+
+        .questao .qnumero {
+            display: inline-block;
+            background: #f7971e;
+            color: #1a1a2e;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .questao .qtexto {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .questao .qtexto code {
+            background: #e9ecef;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 13px;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .options.true-false {
+            grid-template-columns: 1fr 1fr;
+            max-width: 300px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .option:hover:not(.disabled) {
+            border-color: #f7971e;
+            background: #fff8f0;
+        }
+
+        .option input[type="radio"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .option label {
+            font-size: 14px;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .option.correct {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        .option.wrong {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .option.disabled {
+            opacity: 0.7;
+            cursor: default;
+        }
+
+        .option.disabled:hover {
+            border-color: #e9ecef;
+            background: white;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #f7971e, #ffd200);
+            color: #1a1a2e;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            margin: 4px;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 5px 15px rgba(247, 151, 30, 0.4);
+        }
+
+        .btn-sm {
+            padding: 6px 16px;
+            font-size: 0.8rem;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .highlight-box {
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin: 8px 0;
+        }
+
+        .highlight-box.green {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+        }
+
+        .highlight-box.blue {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .highlight-box.orange {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+        }
+
+        .highlight-box.red {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+        }
+
+        .result-box {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            border: 3px solid #f7971e;
+            display: none;
+            margin-top: 20px;
+        }
+
+        .result-box.show {
+            display: block;
+        }
+
+        .score {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #b8860b;
+        }
+
+        .feedback-item {
+            padding: 4px 0;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+
+        .feedback-item.correct {
+            color: #28a745;
+        }
+
+        .feedback-item.wrong {
+            color: #dc3545;
+        }
+
+        .feedback-item .explicacao {
+            color: #6c757d;
+            font-size: 0.85rem;
+            margin-left: 30px;
+            font-style: italic;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+        }
+
+        .btn-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #f7971e;
+            color: #1a1a2e;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-top:hover {
+            transform: scale(1.05);
+        }
+
+        .no-print {
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                padding: 18px;
+            }
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            .header {
+                padding: 20px;
+            }
+            .exemplo {
+                padding: 15px;
+            }
+            .options {
+                grid-template-columns: 1fr;
+            }
+            .options.true-false {
+                grid-template-columns: 1fr 1fr;
+            }
+            .codigo-html {
+                font-size: 0.7rem;
+                max-height: 250px;
+                padding: 10px 12px;
+            }
+            .codigo-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .codigo-header .codigo-actions {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            .header h1 {
+                font-size: 1.2rem;
+            }
+            .badge {
+                font-size: 0.65rem;
+                padding: 3px 10px;
+            }
+            .options.true-false {
+                grid-template-columns: 1fr;
+            }
+            .codigo-html {
+                font-size: 0.65rem;
+                padding: 8px 10px;
+                line-height: 1.6;
+            }
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            .card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+            .header {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .badge {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            body {
+                background: white !important;
+                padding: 10px !important;
+            }
+            .container {
+                max-width: 100% !important;
+            }
+            .btn-top {
+                display: none !important;
+            }
+            .exemplo {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                border: 1px solid #ddd;
+            }
+            .codigo-html {
+                background: #f5f5f5;
+                color: #1a1a2e;
+            }
+            .codigo-html .tag {
+                color: #dc3545;
+            }
+            .codigo-html .attr {
+                color: #b8860b;
+            }
+            .codigo-html .value {
+                color: #28a745;
+            }
+            .codigo-html .comment {
+                color: #6c757d;
+            }
+            .codigo-html .js-keyword {
+                color: #d63384;
+            }
+            .codigo-html .js-string {
+                color: #28a745;
+            }
+            .codigo-html .js-function {
+                color: #007bff;
+            }
+            .codigo-html .js-number {
+                color: #fd7e14;
+            }
+            .codigo-html .js-operator {
+                color: #dc3545;
+            }
+            .codigo-html .js-comment {
+                color: #6c757d;
+            }
+            .codigo-html .js-var {
+                color: #6f42c1;
+            }
+            .codigo-html .js-bracket {
+                color: #b8860b;
+            }
+            .codigo-html .js-equals {
+                color: #dc3545;
+            }
+            .codigo-header {
+                background: #e9ecef;
+                border-bottom-color: #dee2e6;
+            }
+            .codigo-header .codigo-title {
+                color: #495057;
+            }
+            .codigo-header .codigo-actions button {
+                display: none !important;
+            }
+            .option.correct {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .option.wrong {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .result-box {
+                border: 2px solid #f7971e !important;
+            }
+            .questao {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="header">
+            <h1>📝 Eventos DOM - <span>Exemplos e Quiz</span></h1>
+            <p>onclick | onchange | onload | onmousedown | onmouseup</p>
+            <div class="badge-group">
+                <span class="badge">📌 5 exemplos</span>
+                <span class="badge">📝 10 questões</span>
+                <span class="badge">💻 Código pronto</span>
+                <span class="badge">✅ Com gabarito</span>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        INTRODUÇÃO
+        ============================================================ -->
+        <div class="card no-print">
+            <h2>📖 O que são Eventos DOM?</h2>
+            <p>Eventos DOM são ações que ocorrem na página web, como <strong>cliques</strong>, <strong>carregamento da página</strong>, <strong>mudanças em formulários</strong>, entre outros.</p>
+            <p>Os exemplos abaixo mostram os principais eventos DOM em ação.</p>
+            <div class="highlight-box blue">
+                💡 <strong>DICA:</strong> Clique em <strong>"📋 Copiar Código"</strong> para copiar cada exemplo e testar no OneCompiler!
+            </div>
+        </div>
+
+        <!-- ============================================================
+        EXEMPLO 1
+        ============================================================ -->
+        <div class="card">
+            <h2>📌 Exemplos</h2>
+
+            <div class="exemplo">
+                <div>
+                    <span class="numero">1</span>
+                    <span class="titulo">Evento onclick</span>
+                    <span class="evento">onclick</span>
+                </div>
+
+                <div class="descricao">
+                    <p><strong>📌 Descrição:</strong></p>
+                    <p>O evento <code>onclick</code> é disparado quando o usuário <strong>clica</strong> em um elemento.</p>
+                    <p><strong>Funcionamento:</strong> Ao clicar no botão, uma caixa de alerta é exibida com a mensagem "Você clicou no botão".</p>
+                </div>
+
+                <div class="codigo-wrapper">
+                    <div class="codigo-header">
+                        <span class="codigo-title">📄 exemplo-1.html</span>
+                        <div class="codigo-actions">
+                            <button class="copy-btn" onclick="copiarCodigo(this, &#39;codigo1&#39;)">📋 Copiar Código</button>
+                            <button class="run-btn" onclick="abrirOneCompiler(&#39;exemplo1&#39;)">▶️ Testar</button>
+                        </div>
+                    </div>
+                    <div class="codigo-html" id="codigo1">
+<span class="comment">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="value">"pt-BR"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="value">"UTF-8"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Exemplo onclick<span class="tag">&lt;/title&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+
+    <span class="tag">&lt;button</span> <span class="attr">onclick</span>=<span class="value">"alert('Você clicou no botão')"</span><span class="tag">&gt;</span>Clique Aqui!<span class="tag">&lt;/button&gt;</span>
+
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span>
+                    </div>
+                    <span class="copy-feedback" id="feedback-codigo1">✅ Copiado!</span>
+                </div>
+            </div>
+
+            <!-- ============================================================
+            EXEMPLO 2
+            ============================================================ -->
+            <div class="exemplo">
+                <div>
+                    <span class="numero">2</span>
+                    <span class="titulo">Evento onchange</span>
+                    <span class="evento">onchange</span>
+                </div>
+
+                <div class="descricao">
+                    <p><strong>📌 Descrição:</strong></p>
+                    <p>O evento <code>onchange</code> é disparado quando o <strong>valor de um elemento é alterado</strong> (ex: selecionar uma opção em um <code>select</code>).</p>
+                    <p><strong>Funcionamento:</strong> Ao selecionar uma opção, uma caixa de alerta exibe a opção escolhida.</p>
+                </div>
+
+                <div class="codigo-wrapper">
+                    <div class="codigo-header">
+                        <span class="codigo-title">📄 exemplo-2.html</span>
+                        <div class="codigo-actions">
+                            <button class="copy-btn" onclick="copiarCodigo(this, &#39;codigo2&#39;)">📋 Copiar Código</button>
+                            <button class="run-btn" onclick="abrirOneCompiler(&#39;exemplo2&#39;)">▶️ Testar</button>
+                        </div>
+                    </div>
+                    <div class="codigo-html" id="codigo2">
+<span class="comment">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="value">"pt-BR"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="value">"UTF-8"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Exemplo onchange<span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;script&gt;</span>
+        <span class="js-keyword">function</span> <span class="js-function">selecionarOpcao</span>() {
+            <span class="js-keyword">var</span> <span class="js-var">selectElement</span> <span class="js-equals">=</span> <span class="js-function">document</span>.<span class="js-function">getElementById</span>(<span class="js-string">'meuSelect'</span>);
+            <span class="js-keyword">var</span> <span class="js-var">opcaoSelecionada</span> <span class="js-equals">=</span> <span class="js-var">selectElement</span>.<span class="js-var">options</span>[<span class="js-var">selectElement</span>.<span class="js-var">selectedIndex</span>].<span class="js-var">text</span>;
+            <span class="js-function">alert</span>(<span class="js-string">'Opção selecionada: '</span> <span class="js-operator">+</span> <span class="js-var">opcaoSelecionada</span>);
+        }
+    <span class="tag">&lt;/script&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+
+    <span class="tag">&lt;h1&gt;</span>Exemplo de onchange<span class="tag">&lt;/h1&gt;</span>
+
+    <span class="tag">&lt;p&gt;</span>Escolha uma opção:<span class="tag">&lt;/p&gt;</span>
+
+    <span class="tag">&lt;select</span> <span class="attr">id</span>=<span class="value">"meuSelect"</span> <span class="attr">onchange</span>=<span class="value">"selecionarOpcao()"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;option</span> <span class="attr">value</span>=<span class="value">"opcao1"</span><span class="tag">&gt;</span>Opção 1<span class="tag">&lt;/option&gt;</span>
+        <span class="tag">&lt;option</span> <span class="attr">value</span>=<span class="value">"opcao2"</span><span class="tag">&gt;</span>Opção 2<span class="tag">&lt;/option&gt;</span>
+        <span class="tag">&lt;option</span> <span class="attr">value</span>=<span class="value">"opcao3"</span><span class="tag">&gt;</span>Opção 3<span class="tag">&lt;/option&gt;</span>
+    <span class="tag">&lt;/select&gt;</span>
+
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span>
+                    </div>
+                    <span class="copy-feedback" id="feedback-codigo2">✅ Copiado!</span>
+                </div>
+            </div>
+
+            <!-- ============================================================
+            EXEMPLO 3
+            ============================================================ -->
+            <div class="exemplo">
+                <div>
+                    <span class="numero">3</span>
+                    <span class="titulo">Evento onload</span>
+                    <span class="evento">onload</span>
+                </div>
+
+                <div class="descricao">
+                    <p><strong>📌 Descrição:</strong></p>
+                    <p>O evento <code>onload</code> é disparado quando a <strong>página termina de carregar</strong>.</p>
+                    <p><strong>Funcionamento:</strong> Ao carregar a página, uma caixa de alerta é exibida automaticamente.</p>
+                </div>
+
+                <div class="codigo-wrapper">
+                    <div class="codigo-header">
+                        <span class="codigo-title">📄 exemplo-3.html</span>
+                        <div class="codigo-actions">
+                            <button class="copy-btn" onclick="copiarCodigo(this, &#39;codigo3&#39;)">📋 Copiar Código</button>
+                            <button class="run-btn" onclick="abrirOneCompiler(&#39;exemplo3&#39;)">▶️ Testar</button>
+                        </div>
+                    </div>
+                    <div class="codigo-html" id="codigo3">
+<span class="comment">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="value">"pt-BR"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="value">"UTF-8"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Exemplo onload<span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;script&gt;</span>
+        <span class="js-keyword">function</span> <span class="js-function">exibirMensagem</span>() {
+            <span class="js-function">alert</span>(<span class="js-string">'A página foi totalmente carregada!'</span>);
+        }
+    <span class="tag">&lt;/script&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body</span> <span class="attr">onload</span>=<span class="value">"exibirMensagem()"</span><span class="tag">&gt;</span>
+
+    <span class="tag">&lt;h1&gt;</span>Conteúdo da Página<span class="tag">&lt;/h1&gt;</span>
+    <span class="tag">&lt;p&gt;</span>Esta é uma página de exemplo.<span class="tag">&lt;/p&gt;</span>
+
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span>
+                    </div>
+                    <span class="copy-feedback" id="feedback-codigo3">✅ Copiado!</span>
+                </div>
+            </div>
+
+            <!-- ============================================================
+            EXEMPLO 4
+            ============================================================ -->
+            <div class="exemplo">
+                <div>
+                    <span class="numero">4</span>
+                    <span class="titulo">Eventos onmousedown / onmouseup</span>
+                    <span class="evento">onmousedown / onmouseup</span>
+                </div>
+
+                <div class="descricao">
+                    <p><strong>📌 Descrição:</strong></p>
+                    <p>O evento <code>onmousedown</code> é disparado quando o <strong>botão do mouse é pressionado</strong>. O evento <code>onmouseup</code> é disparado quando o <strong>botão do mouse é solto</strong>.</p>
+                    <p><strong>Funcionamento:</strong> Ao pressionar o botão, a cor muda. Ao soltar, a cor volta e um alerta é exibido.</p>
+                </div>
+
+                <div class="codigo-wrapper">
+                    <div class="codigo-header">
+                        <span class="codigo-title">📄 exemplo-4.html</span>
+                        <div class="codigo-actions">
+                            <button class="copy-btn" onclick="copiarCodigo(this, &#39;codigo4&#39;)">📋 Copiar Código</button>
+                            <button class="run-btn" onclick="abrirOneCompiler(&#39;exemplo4&#39;)">▶️ Testar</button>
+                        </div>
+                    </div>
+                    <div class="codigo-html" id="codigo4">
+<span class="comment">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="value">"pt-BR"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="value">"UTF-8"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Eventos do Mouse<span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;style&gt;</span>
+        <span class="tag">#botaoClique</span> {
+            <span class="attr">padding</span>: 10px 20px;
+            <span class="attr">font-size</span>: 16px;
+            <span class="attr">background-color</span>: #3498db;
+            <span class="attr">color</span>: #fff;
+            <span class="attr">border</span>: none;
+            <span class="attr">cursor</span>: pointer;
+            <span class="attr">transition</span>: background-color 0.3s ease-in-out;
+        }
+
+        <span class="tag">#botaoClique:hover</span> {
+            <span class="attr">background-color</span>: #2980b9;
+        }
+
+        <span class="tag">#botaoClique:active</span> {
+            <span class="attr">background-color</span>: #1f618d;
+        }
+    <span class="tag">&lt;/style&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+
+    <span class="tag">&lt;h1&gt;</span>Exemplo de Eventos de Clique<span class="tag">&lt;/h1&gt;</span>
+
+    <span class="tag">&lt;button</span> <span class="attr">id</span>=<span class="value">"botaoClique"</span>
+            <span class="attr">onmousedown</span>=<span class="value">"alterarCorPressionado()"</span>
+            <span class="attr">onmouseup</span>=<span class="value">"alterarCorLiberado()"</span>
+            <span class="attr">onclick</span>=<span class="value">"realizarAcao()"</span><span class="tag">&gt;</span>
+        Clique Aqui!
+    <span class="tag">&lt;/button&gt;</span>
+
+    <span class="tag">&lt;script&gt;</span>
+        <span class="js-keyword">function</span> <span class="js-function">alterarCorPressionado</span>() {
+            <span class="js-function">document</span>.<span class="js-function">getElementById</span>(<span class="js-string">'botaoClique'</span>).<span class="js-var">style</span>.<span class="js-var">backgroundColor</span> <span class="js-equals">=</span> <span class="js-string">'#1f618d'</span>;
+        }
+
+        <span class="js-keyword">function</span> <span class="js-function">alterarCorLiberado</span>() {
+            <span class="js-function">document</span>.<span class="js-function">getElementById</span>(<span class="js-string">'botaoClique'</span>).<span class="js-var">style</span>.<span class="js-var">backgroundColor</span> <span class="js-equals">=</span> <span class="js-string">'#2980b9'</span>;
+        }
+
+        <span class="js-keyword">function</span> <span class="js-function">realizarAcao</span>() {
+            <span class="js-function">alert</span>(<span class="js-string">'Ação realizada!'</span>);
+        }
+    <span class="tag">&lt;/script&gt;</span>
+
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span>
+                    </div>
+                    <span class="copy-feedback" id="feedback-codigo4">✅ Copiado!</span>
+                </div>
+            </div>
+
+            <!-- ============================================================
+            EXEMPLO 5
+            ============================================================ -->
+            <div class="exemplo">
+                <div>
+                    <span class="numero">5</span>
+                    <span class="titulo">Interação com prompt</span>
+                    <span class="evento">prompt / alert</span>
+                </div>
+
+                <div class="descricao">
+                    <p><strong>📌 Descrição:</strong></p>
+                    <p><code>prompt()</code> exibe uma caixa de diálogo para <strong>entrada de dados</strong> do usuário. <code>alert()</code> exibe uma mensagem.</p>
+                    <p><strong>Funcionamento:</strong> Ao carregar a página, pergunta o nome e exibe um cumprimento personalizado.</p>
+                </div>
+
+                <div class="codigo-wrapper">
+                    <div class="codigo-header">
+                        <span class="codigo-title">📄 exemplo-5.html</span>
+                        <div class="codigo-actions">
+                            <button class="copy-btn" onclick="copiarCodigo(this, &#39;codigo5&#39;)">📋 Copiar Código</button>
+                            <button class="run-btn" onclick="abrirOneCompiler(&#39;exemplo5&#39;)">▶️ Testar</button>
+                        </div>
+                    </div>
+                    <div class="codigo-html" id="codigo5">
+<span class="comment">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="value">"pt-BR"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="value">"UTF-8"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Cumprimento Personalizado<span class="tag">&lt;/title&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+
+    <span class="tag">&lt;script</span> <span class="attr">type</span>=<span class="value">"text/javascript"</span><span class="tag">&gt;</span>
+        <span class="js-keyword">var</span> <span class="js-var">nome</span> <span class="js-equals">=</span> <span class="js-function">prompt</span>(<span class="js-string">"Qual é o seu nome?"</span>);
+        <span class="js-function">alert</span>(<span class="js-string">"Olá, "</span> <span class="js-operator">+</span> <span class="js-var">nome</span> <span class="js-operator">+</span> <span class="js-string">"!"</span>);
+    <span class="tag">&lt;/script&gt;</span>
+
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span>
+                    </div>
+                    <span class="copy-feedback" id="feedback-codigo5">✅ Copiado!</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============================================================
+        QUIZ
+        ============================================================ -->
+        <div class="card" id="quiz">
+            <h2>📝 Quiz - Eventos DOM</h2>
+            <p>Responda as <strong>10 questões</strong> sobre os eventos DOM apresentados.</p>
+            <p style="margin-bottom: 15px;">Ao final, clique em <strong>"Verificar Respostas"</strong> para corrigir.</p>
+
+            <!-- ===== Q1 ===== -->
+            <div class="questao" id="q1">
+                <div class="qtexto">
+                    <span class="qnumero">1</span>
+                    Qual evento é disparado quando o usuário <strong>clica</strong> em um elemento?
+                </div>
+                <div class="options">
+                    <div class="option correct disabled"><input type="radio" name="q1" value="A" disabled=""><label>onclick</label></div>
+                    <div class="option disabled"><input type="radio" name="q1" value="B" disabled=""><label>onchange</label></div>
+                    <div class="option disabled"><input type="radio" name="q1" value="C" disabled=""><label>onload</label></div>
+                    <div class="option disabled"><input type="radio" name="q1" value="D" disabled=""><label>onmouseup</label></div>
+                </div>
+            </div>
+
+            <!-- ===== Q2 ===== -->
+            <div class="questao" id="q2">
+                <div class="qtexto">
+                    <span class="qnumero">2</span>
+                    Qual evento é disparado quando o <strong>valor de um elemento é alterado</strong> (ex: select)?
+                </div>
+                <div class="options">
+                    <div class="option disabled"><input type="radio" name="q2" value="A" disabled=""><label>onclick</label></div>
+                    <div class="option correct disabled"><input type="radio" name="q2" value="B" disabled=""><label>onchange</label></div>
+                    <div class="option disabled"><input type="radio" name="q2" value="C" disabled=""><label>onload</label></div>
+                    <div class="option disabled"><input type="radio" name="q2" value="D" disabled=""><label>onmousedown</label></div>
+                </div>
+            </div>
+
+            <!-- ===== Q3 ===== -->
+            <div class="questao" id="q3">
+                <div class="qtexto">
+                    <span class="qnumero">3</span>
+                    Qual evento é disparado quando a <strong>página termina de carregar</strong>?
+                </div>
+                <div class="options">
+                    <div class="option disabled"><input type="radio" name="q3" value="A" disabled=""><label>onclick</label></div>
+                    <div class="option disabled"><input type="radio" name="q3" value="B" disabled=""><label>onchange</label></div>
+                    <div class="option correct disabled"><input type="radio" name="q3" value="C" disabled=""><label>onload</label></div>
+                    <div class="option disabled"><input type="radio" name="q3" value="D" disabled=""><label>onmouseup</label></div>
+                </div>
+            </div>
+
+            <!-- ===== Q4 ===== -->
+            <div class="questao" id="q4">
+                <div class="qtexto">
+                    <span class="qnumero">4</span>
+                    Qual evento é disparado quando o <strong>botão do mouse é pressionado</strong>?
+                </div>
+                <div class="options">
+                    <div class="option disabled"><input type="radio" name="q4" value="A" disabled=""><label>onclick</label></div>
+                    <div class="option disabled"><input type="radio" name="q4" value="B" disabled=""><label>onchange</label></div>
+                    <div class="option correct disabled"><input type="radio" name="q4" value="C" disabled=""><label>onmousedown</label></div>
+                    <div class="option disabled"><input type="radio" name="q4" value="D" disabled=""><label>onmouseup</label></div>
+                </div>
+            </div>
+
+            <!-- ===== Q5 ===== -->
+            <div class="questao" id="q5">
+                <div class="qtexto">
+                    <span class="qnumero">5</span>
+                    Qual evento é disparado quando o <strong>botão do mouse é solto</strong>?
+                </div>
+                <div class="options">
+                    <div class="option disabled"><input type="radio" name="q5" value="A" disabled=""><label>onclick</label></div>
+                    <div class="option disabled"><input type="radio" name="q5" value="B" disabled=""><label>onchange</label></div>
+                    <div class="option disabled"><input type="radio" name="q5" value="C" disabled=""><label>onmousedown</label></div>
+                    <div class="option correct disabled"><input type="radio" name="q5" value="D" disabled=""><label>onmouseup</label></div>
+                </div>
+            </div>
+
+            <!-- ===== Q6 ===== -->
+            <div class="questao" id="q6">
+                <div class="qtexto">
+                    <span class="qnumero">6</span>
+                    Qual função exibe uma caixa de diálogo para <strong>entrada de dados</strong> do usuário?
+                </div>
+                <div class="options">
+                    <div class="option disabled"><input type="radio" name="q6" value="A" disabled=""><label>alert()</label></div>
+                    <div class="option correct disabled"><input type="radio" name="q6" value="B" disabled=""><label>prompt()</label></div>
+                    <div class="option disabled"><input type="radio" name="q6" value="C" disabled=""><label>console.log()</label></div>
+                    <div class="option disabled"><input type="radio" name="q6" value="D" disabled=""><label>confirm()</label></div>
+                </div>
+            </div>
+
+            <!-- ===== Q7 ===== -->
+            <div class="questao" id="q7">
+                <div class="qtexto">
+                    <span class="qnumero">7</span>
+                    Qual função exibe uma <strong>mensagem</strong> em uma caixa de diálogo?
+                </div>
+                <div class="options">
+                    <div class="option correct disabled"><input type="radio" name="q7" value="A" disabled=""><label>alert()</label></div>
+                    <div class="option disabled"><input type="radio" name="q7" value="B" disabled=""><label>prompt()</label></div>
+                    <div class="option disabled"><input type="radio" name="q7" value="C" disabled=""><label>console.log()</label></div>
+                    <div class="option disabled"><input type="radio" name="q7" value="D" disabled=""><label>document.write()</label></div>
+                </div>
+            </div>
+
+            <!-- ===== Q8 ===== -->
+            <div class="questao" id="q8">
+                <div class="qtexto">
+                    <span class="qnumero">8</span>
+                    No exemplo do evento <code>onchange</code>, qual elemento HTML foi utilizado?
+                </div>
+                <div class="options">
+                    <div class="option disabled"><input type="radio" name="q8" value="A" disabled=""><label>button</label></div>
+                    <div class="option disabled"><input type="radio" name="q8" value="B" disabled=""><label>input</label></div>
+                    <div class="option correct disabled"><input type="radio" name="q8" value="C" disabled=""><label>select</label></div>
+                    <div class="option disabled"><input type="radio" name="q8" value="D" disabled=""><label>div</label></div>
+                </div>
+            </div>
+
+            <!-- ===== Q9 ===== -->
+            <div class="questao true-false" id="q9">
+                <div class="qtexto">
+                    <span class="qnumero">9</span>
+                    O evento <code>onload</code> é disparado antes da página ser totalmente carregada.
+                </div>
+                <div class="options true-false">
+                    <div class="option disabled"><input type="radio" name="q9" value="V" disabled=""><label>✅ Verdadeiro</label></div>
+                    <div class="option correct disabled"><input type="radio" name="q9" value="F" disabled=""><label>❌ Falso</label></div>
+                </div>
+            </div>
+
+            <!-- ===== Q10 ===== -->
+            <div class="questao true-false" id="q10">
+                <div class="qtexto">
+                    <span class="qnumero">10</span>
+                    O evento <code>onclick</code> pode ser usado em botões, imagens, links e outros elementos HTML.
+                </div>
+                <div class="options true-false">
+                    <div class="option correct disabled"><input type="radio" name="q10" value="V" disabled=""><label>✅ Verdadeiro</label></div>
+                    <div class="option disabled"><input type="radio" name="q10" value="F" disabled=""><label>❌ Falso</label></div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;" class="no-print">
+                <button class="btn" onclick="corrigirQuiz()">✅ Verificar Respostas</button>
+                <button class="btn btn-secondary" onclick="limparQuiz()">🔄 Limpar respostas</button>
+            </div>
+
+        </div>
+
+        <!-- ============================================================
+        RESULTADO
+        ============================================================ -->
+        <div class="card result-box show" id="resultadoQuiz">
+            <h2>📊 Resultado do Quiz</h2>
+            <div class="score" id="pontuacao">10 / 10</div>
+            <p style="margin: 10px 0;">Respostas corretas:</p>
+            <div id="feedback">
+                            <div class="feedback-item correct">
+                                ✅ Q1 - Correta
+                                <div class="explicacao">onclick é disparado quando o usuário clica em um elemento.</div>
+                            </div>
+                        
+                            <div class="feedback-item correct">
+                                ✅ Q2 - Correta
+                                <div class="explicacao">onchange é disparado quando o valor de um elemento é alterado.</div>
+                            </div>
+                        
+                            <div class="feedback-item correct">
+                                ✅ Q3 - Correta
+                                <div class="explicacao">onload é disparado quando a página termina de carregar.</div>
+                            </div>
+                        
+                            <div class="feedback-item correct">
+                                ✅ Q4 - Correta
+                                <div class="explicacao">onmousedown é disparado quando o botão do mouse é pressionado.</div>
+                            </div>
+                        
+                            <div class="feedback-item correct">
+                                ✅ Q5 - Correta
+                                <div class="explicacao">onmouseup é disparado quando o botão do mouse é solto.</div>
+                            </div>
+                        
+                            <div class="feedback-item correct">
+                                ✅ Q6 - Correta
+                                <div class="explicacao">prompt() exibe uma caixa de diálogo para entrada de dados.</div>
+                            </div>
+                        
+                            <div class="feedback-item correct">
+                                ✅ Q7 - Correta
+                                <div class="explicacao">alert() exibe uma mensagem em uma caixa de diálogo.</div>
+                            </div>
+                        
+                            <div class="feedback-item correct">
+                                ✅ Q8 - Correta
+                                <div class="explicacao">O evento onchange foi utilizado em um elemento select.</div>
+                            </div>
+                        
+                            <div class="feedback-item correct">
+                                ✅ Q9 - Correta
+                                <div class="explicacao">onload é disparado APÓS a página ser totalmente carregada.</div>
+                            </div>
+                        
+                            <div class="feedback-item correct">
+                                ✅ Q10 - Correta
+                                <div class="explicacao">onclick pode ser usado em qualquer elemento HTML (botões, imagens, links, etc).</div>
+                            </div>
+                        
+                        <div class="highlight-box green" style="margin-top: 15px; text-align: left;">
+                            🎉 <strong>PARABÉNS! Você acertou todas!</strong> Excelente domínio sobre Eventos DOM!
+                        </div>
+                    </div>
+
+            <div style="margin-top: 20px;" class="no-print">
+                <button class="btn btn-success" onclick="window.print()">🖨️ Imprimir (PDF)</button>
+                <button class="btn btn-danger" onclick="limparQuiz()">🔄 Recomeçar</button>
+            </div>
+            <div class="highlight-box blue" style="margin-top: 15px; text-align: left;">
+                📸 <strong>IMPORTANTE:</strong> Clique em "Imprimir" para salvar o resultado em PDF.
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer no-print">
+            <p>📝 Eventos DOM - Exemplos e Quiz | onclick | onchange | onload | onmousedown | onmouseup</p>
+        </div>
+
+    </div>
+
+    <!-- BOTÃO TOPO -->
+    <button class="btn-top no-print" onclick="window.scrollTo({top: 0, behavior: &#39;smooth&#39;})">⬆️ Topo</button>
+
+    <!-- ============================================================
+    SCRIPTS
+    ============================================================ -->
+    <script>
+        // ============================================================
+        // COPIAR CÓDIGO
+        // ============================================================
+        function copiarCodigo(btn, elementId) {
+            var codeElement = document.getElementById(elementId);
+            var codeText = codeElement.textContent;
+
+            navigator.clipboard.writeText(codeText).then(function() {
+                var feedbackId = 'feedback-' + elementId;
+                var feedback = document.getElementById(feedbackId);
+                if (feedback) {
+                    feedback.classList.add('show');
+                    setTimeout(function() {
+                        feedback.classList.remove('show');
+                    }, 2500);
+                }
+
+                var originalText = btn.textContent;
+                btn.textContent = '✅ Copiado!';
+                btn.style.background = '#218838';
+                setTimeout(function() {
+                    btn.textContent = originalText;
+                    btn.style.background = '#28a745';
+                }, 2500);
+
+            }).catch(function() {
+                var range = document.createRange();
+                range.selectNode(codeElement);
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+                document.execCommand('copy');
+                window.getSelection().removeAllRanges();
+
+                var feedbackId = 'feedback-' + elementId;
+                var feedback = document.getElementById(feedbackId);
+                if (feedback) {
+                    feedback.classList.add('show');
+                    setTimeout(function() {
+                        feedback.classList.remove('show');
+                    }, 2500);
+                }
+
+                var originalText = btn.textContent;
+                btn.textContent = '✅ Copiado!';
+                btn.style.background = '#218838';
+                setTimeout(function() {
+                    btn.textContent = originalText;
+                    btn.style.background = '#28a745';
+                }, 2500);
+            });
+        }
+
+        // ============================================================
+        // ABRIR ONECOMPILER
+        // ============================================================
+        const htmlCompleto = {
+            exemplo1: `<!DOCTYPE html>
+        <html lang="pt-BR">
+        <head>
+            <meta charset="UTF-8">
+            <title>Exemplo onclick</title>
+        </head>
+        <body>
+            <button onclick="alert('Você clicou no botão')">Clique Aqui!</button>
+        </body>
+        </html>`,
+
+            exemplo2: `<!DOCTYPE html>
+        <html lang="pt-BR">
+        <head>
+            <meta charset="UTF-8">
+            <title>Exemplo onchange</title>
+            <script>
+                function selecionarOpcao() {
+                    var selectElement = document.getElementById('meuSelect');
+                    var opcaoSelecionada = selectElement.options[selectElement.selectedIndex].text;
+                    alert('Opção selecionada: ' + opcaoSelecionada);
+                }
+            <\/script>
+        </head>
+        <body>
+            <h1>Exemplo de onchange</h1>
+            <p>Escolha uma opção:</p>
+            <select id="meuSelect" onchange="selecionarOpcao()">
+                <option value="opcao1">Opção 1</option>
+                <option value="opcao2">Opção 2</option>
+                <option value="opcao3">Opção 3</option>
+            </select>
+        </body>
+        </html>`,
+
+            exemplo3: `<!DOCTYPE html>
+        <html lang="pt-BR">
+        <head>
+            <meta charset="UTF-8">
+            <title>Exemplo onload</title>
+            <script>
+                function exibirMensagem() {
+                    alert('A página foi totalmente carregada!');
+                }
+            <\/script>
+        </head>
+        <body onload="exibirMensagem()">
+            <h1>Conteúdo da Página</h1>
+            <p>Esta é uma página de exemplo.</p>
+        </body>
+        </html>`,
+
+            exemplo4: `<!DOCTYPE html>
+        <html lang="pt-BR">
+        <head>
+            <meta charset="UTF-8">
+            <title>Eventos do Mouse</title>
+            <style>
+                #botaoClique {
+                    padding: 10px 20px;
+                    font-size: 16px;
+                    background-color: #3498db;
+                    color: #fff;
+                    border: none;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease-in-out;
+                }
+                #botaoClique:hover { background-color: #2980b9; }
+                #botaoClique:active { background-color: #1f618d; }
+            <\/style>
+        </head>
+        <body>
+            <h1>Exemplo de Eventos de Clique</h1>
+            <button id="botaoClique" onmousedown="alterarCorPressionado()" onmouseup="alterarCorLiberado()" onclick="realizarAcao()">Clique Aqui!</button>
+            <script>
+                function alterarCorPressionado() {
+                    document.getElementById('botaoClique').style.backgroundColor = '#1f618d';
+                }
+                function alterarCorLiberado() {
+                    document.getElementById('botaoClique').style.backgroundColor = '#2980b9';
+                }
+                function realizarAcao() {
+                    alert('Ação realizada!');
+                }
+            <\/script>
+        </body>
+        </html>`,
+
+            exemplo5: `<!DOCTYPE html>
+        <html lang="pt-BR">
+        <head>
+            <meta charset="UTF-8">
+            <title>Cumprimento Personalizado</title>
+        </head>
+        <body>
+            <script type="text/javascript">
+                var nome = prompt("Qual é o seu nome?");
+                alert("Olá, " + nome + "!");
+            <\/script>
+        </body>
+        </html>`
+        };
+
+        function abrirOneCompiler(exemplo) {
+            const url = 'https://onecompiler.com/html?code=' + encodeURIComponent(htmlCompleto[exemplo]);
+            window.open(url, '_blank');
+        }
+
+        // ============================================================
+        // QUIZ - GABARITO
+        // ============================================================
+        const gabarito = {
+            q1: 'A',
+            q2: 'B',
+            q3: 'C',
+            q4: 'C',
+            q5: 'D',
+            q6: 'B',
+            q7: 'A',
+            q8: 'C',
+            q9: 'F',
+            q10: 'V'
+        };
+
+        const explicacoes = {
+            q1: 'onclick é disparado quando o usuário clica em um elemento.',
+            q2: 'onchange é disparado quando o valor de um elemento é alterado.',
+            q3: 'onload é disparado quando a página termina de carregar.',
+            q4: 'onmousedown é disparado quando o botão do mouse é pressionado.',
+            q5: 'onmouseup é disparado quando o botão do mouse é solto.',
+            q6: 'prompt() exibe uma caixa de diálogo para entrada de dados.',
+            q7: 'alert() exibe uma mensagem em uma caixa de diálogo.',
+            q8: 'O evento onchange foi utilizado em um elemento select.',
+            q9: 'onload é disparado APÓS a página ser totalmente carregada.',
+            q10: 'onclick pode ser usado em qualquer elemento HTML (botões, imagens, links, etc).'
+        };
+
+        function corrigirQuiz() {
+            let acertos = 0;
+            let feedbackHTML = '';
+            let todasRespondidas = true;
+
+            for (let [id, gab] of Object.entries(gabarito)) {
+                const selected = document.querySelector(`input[name="${id}"]:checked`);
+                const questaoDiv = document.getElementById(id);
+                const options = questaoDiv.querySelectorAll('.option');
+
+                if (!selected) {
+                    todasRespondidas = false;
+                    options.forEach(opt => opt.classList.add('disabled'));
+                    continue;
+                }
+
+                const resposta = selected.value;
+                const isCorrect = resposta === gab;
+
+                options.forEach(opt => {
+                    const radio = opt.querySelector('input[type="radio"]');
+                    if (radio.value === gab) {
+                        opt.classList.add('correct');
+                    } else if (radio.checked && radio.value !== gab) {
+                        opt.classList.add('wrong');
+                    }
+                    radio.disabled = true;
+                    opt.classList.add('disabled');
+                });
+
+                const num = id.replace('q', '');
+                if (isCorrect) {
+                    acertos++;
+                    feedbackHTML += `
+                            <div class="feedback-item correct">
+                                ✅ Q${num} - Correta
+                                <div class="explicacao">${explicacoes[id]}</div>
+                            </div>
+                        `;
+                } else {
+                    feedbackHTML += `
+                            <div class="feedback-item wrong">
+                                ❌ Q${num} - Incorreta
+                                <div class="explicacao">${explicacoes[id]}</div>
+                            </div>
+                        `;
+                }
+            }
+
+            if (!todasRespondidas) {
+                alert('⚠️ Responda todas as questões antes de finalizar!');
+                return;
+            }
+
+            document.getElementById('pontuacao').textContent = acertos + ' / 10';
+            document.getElementById('feedback').innerHTML = feedbackHTML;
+            document.getElementById('resultadoQuiz').classList.add('show');
+
+            document.getElementById('resultadoQuiz').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            let mensagem = '';
+            if (acertos === 10) {
+                mensagem = `
+                        <div class="highlight-box green" style="margin-top: 15px; text-align: left;">
+                            🎉 <strong>PARABÉNS! Você acertou todas!</strong> Excelente domínio sobre Eventos DOM!
+                        </div>
+                    `;
+            } else if (acertos >= 8) {
+                mensagem = `
+                        <div class="highlight-box blue" style="margin-top: 15px; text-align: left;">
+                            💪 <strong>Bom trabalho!</strong> Você acertou ${acertos}/10. Revise os tópicos que errou!
+                        </div>
+                    `;
+            } else if (acertos >= 5) {
+                mensagem = `
+                        <div class="highlight-box orange" style="margin-top: 15px; text-align: left;">
+                            📚 <strong>Continue praticando!</strong> Você acertou ${acertos}/10. Reveja os exemplos!
+                        </div>
+                    `;
+            } else {
+                mensagem = `
+                        <div class="highlight-box red" style="margin-top: 15px; text-align: left;">
+                            📚 <strong>Que tal revisar os exemplos novamente?</strong> Você acertou ${acertos}/10.
+                        </div>
+                    `;
+            }
+            document.getElementById('feedback').innerHTML += mensagem;
+        }
+
+        function limparQuiz() {
+            const radios = document.querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => {
+                radio.checked = false;
+                radio.disabled = false;
+            });
+
+            const options = document.querySelectorAll('.option');
+            options.forEach(opt => {
+                opt.classList.remove('correct', 'wrong', 'disabled');
+            });
+
+            document.getElementById('resultadoQuiz').classList.remove('show');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ============================================================
+        // CLICK NAS OPÇÕES
+        // ============================================================
+        document.querySelectorAll('.option').forEach(opt => {
+            opt.addEventListener('click', function(e) {
+                if (this.classList.contains('disabled')) return;
+                const radio = this.querySelector('input[type="radio"]');
+                if (radio) {
+                    radio.checked = true;
+                    const event = new Event('change', { bubbles: true });
+                    radio.dispatchEvent(event);
+                }
+            });
+        });
+    </script>
+
+
+</body></html>

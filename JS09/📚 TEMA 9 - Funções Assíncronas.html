@@ -1,0 +1,1902 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)https://almeida-cma.github.io/js09/t9final.html -->
+<html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 TEMA 9 - Funções Assíncronas</title>
+    <style>
+        /* ============================================================
+           ESTILOS GERAIS
+           ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* ============================================================
+           HEADER
+           ============================================================ */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+        }
+
+        .header h1 span {
+            color: #fff;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .badge-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 16px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        /* ============================================================
+           CARDS
+           ============================================================ */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            border-left: 5px solid #667eea;
+            padding-left: 15px;
+            font-size: 1.4rem;
+        }
+
+        .card h3 {
+            color: #5a4f8a;
+            margin: 18px 0 10px 0;
+            font-size: 1.1rem;
+        }
+
+        .card h4 {
+            color: #2c3e50;
+            margin: 12px 0 6px 0;
+            font-size: 0.95rem;
+        }
+
+        .card p {
+            color: #2c3e50;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .card ul,
+        .card ol {
+            color: #2c3e50;
+            line-height: 1.8;
+            margin: 8px 0 12px 25px;
+        }
+
+        .card li {
+            margin-bottom: 4px;
+        }
+
+        /* ============================================================
+           DESTAQUES
+           ============================================================ */
+        .highlight-box {
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin: 8px 0;
+        }
+
+        .highlight-box.yellow {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+        }
+
+        .highlight-box.blue {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .highlight-box.green {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+        }
+
+        .highlight-box.purple {
+            background: #e8d5f5;
+            border-left: 4px solid #6f42c1;
+        }
+
+        .highlight-box.orange {
+            background: #ffe5cc;
+            border-left: 4px solid #fd7e14;
+        }
+
+        .highlight-box.red {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+        }
+
+        .highlight-box.tip {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .highlight-box code {
+            background: rgba(0, 0, 0, 0.08);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* ============================================================
+           TABELA DE COMPARAÇÃO
+           ============================================================ */
+        .tabela-assincrono {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 0.9rem;
+        }
+
+        .tabela-assincrono th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .tabela-assincrono td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .tabela-assincrono tr:hover td {
+            background: #f8f9fa;
+        }
+
+        .tabela-assincrono .exemplo {
+            font-family: 'Courier New', monospace;
+            background: #f8f9fa;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        /* ============================================================
+           CÓDIGO COM BOTÕES
+           ============================================================ */
+        .code-wrapper {
+            position: relative;
+            margin: 10px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #dee2e6;
+        }
+
+        .code-wrapper .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #e9ecef;
+            padding: 6px 14px;
+            border-bottom: 1px solid #dee2e6;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .code-wrapper .code-header .code-title {
+            color: #495057;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .code-wrapper .code-header .code-actions {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .code-wrapper .code-header .code-actions button {
+            background: #667eea;
+            color: #fff;
+            border: none;
+            padding: 3px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .code-wrapper .code-header .code-actions button:hover {
+            background: #5a6fd6;
+            transform: scale(1.02);
+        }
+
+        .code-wrapper .code-header .code-actions button.copy-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        .code-wrapper .code-header .code-actions button.copy-btn:hover {
+            background: #218838;
+        }
+
+        .code-wrapper .code-header .code-actions button.run-btn {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .code-wrapper .code-header .code-actions button.run-btn:hover {
+            background: #138496;
+        }
+
+        .code-block {
+            background: #f0f0f0;
+            color: #1a1a2e;
+            padding: 15px 18px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            line-height: 1.8;
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .code-block .comment {
+            color: #6c757d;
+            font-style: italic;
+        }
+        .code-block .keyword {
+            color: #d63384;
+            font-weight: bold;
+        }
+        .code-block .string {
+            color: #28a745;
+        }
+        .code-block .function {
+            color: #007bff;
+        }
+        .code-block .variable {
+            color: #6f42c1;
+        }
+        .code-block .number {
+            color: #fd7e14;
+        }
+        .code-block .operator {
+            color: #dc3545;
+        }
+        .code-block .output {
+            color: #28a745;
+        }
+        .code-block .tag {
+            color: #dc3545;
+        }
+        .code-block .attribute {
+            color: #28a745;
+        }
+        .code-block .selector {
+            color: #d63384;
+        }
+        .code-block .property {
+            color: #007bff;
+        }
+        .code-block .value {
+            color: #28a745;
+        }
+        .code-block .kw {
+            color: #d63384;
+            font-weight: bold;
+        }
+        .code-block .str {
+            color: #28a745;
+        }
+        .code-block .fn {
+            color: #007bff;
+        }
+        .code-block .cm {
+            color: #6c757d;
+            font-style: italic;
+        }
+        .code-block .num {
+            color: #fd7e14;
+        }
+
+        .copy-feedback {
+            position: absolute;
+            top: 38px;
+            right: 12px;
+            background: #28a745;
+            color: white;
+            padding: 3px 12px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .copy-feedback.show {
+            opacity: 1;
+        }
+
+        /* ============================================================
+           CONCEITOS EM GRID
+           ============================================================ */
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .concept-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 12px;
+            border-bottom: 4px solid #667eea;
+        }
+
+        .concept-box h4 {
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .concept-box p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        .concept-box .code-mini {
+            background: #f0f0f0;
+            color: #1a1a2e;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.7rem;
+            margin-top: 6px;
+            overflow-x: auto;
+            border: 1px solid #dee2e6;
+        }
+
+        .concept-box .code-mini .c-comment {
+            color: #6c757d;
+            font-style: italic;
+        }
+        .concept-box .code-mini .c-keyword {
+            color: #d63384;
+            font-weight: bold;
+        }
+        .concept-box .code-mini .c-string {
+            color: #28a745;
+        }
+        .concept-box .code-mini .c-number {
+            color: #fd7e14;
+        }
+        .concept-box .code-mini .c-operator {
+            color: #dc3545;
+        }
+
+        /* ============================================================
+           BOTÕES
+           ============================================================ */
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            margin: 5px;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        /* ============================================================
+           QUESTÕES
+           ============================================================ */
+        .question {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px 18px;
+            margin-bottom: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .question.true-false {
+            border-left-color: #17a2b8;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: #667eea;
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .question-text {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .question-text code {
+            background: #e9ecef;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 13px;
+        }
+
+        .question-text .codigo-exemplo {
+            background: #f0f0f0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            margin: 8px 0;
+            width: 100%;
+            border: 1px solid #dee2e6;
+            line-height: 1.8;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .options.true-false {
+            grid-template-columns: 1fr 1fr;
+            max-width: 300px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .option:hover:not(.disabled) {
+            border-color: #667eea;
+            background: #f0f2ff;
+        }
+
+        .option input[type="radio"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .option label {
+            font-size: 14px;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .option.correct {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        .option.wrong {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .option.disabled {
+            opacity: 0.7;
+            cursor: default;
+        }
+
+        .option.disabled:hover {
+            border-color: #e9ecef;
+            background: white;
+        }
+
+        /* ============================================================
+           RESULTADO
+           ============================================================ */
+        .result-box {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            border: 3px solid #667eea;
+            display: none;
+        }
+
+        .result-box.show {
+            display: block;
+        }
+
+        .score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .feedback-item {
+            padding: 6px 0;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .feedback-item.correct {
+            color: #28a745;
+        }
+
+        .feedback-item.wrong {
+            color: #dc3545;
+        }
+
+        .feedback-item .explicacao {
+            color: #6c757d;
+            font-size: 0.85rem;
+            margin-left: 30px;
+            font-style: italic;
+        }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+        }
+
+        .btn-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #667eea;
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-top:hover {
+            transform: scale(1.05);
+        }
+
+        /* ============================================================
+           RESPONSIVO
+           ============================================================ */
+        @media (max-width: 768px) {
+            .card {
+                padding: 18px;
+            }
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            .header {
+                padding: 20px;
+            }
+            .options {
+                grid-template-columns: 1fr;
+            }
+            .options.true-false {
+                grid-template-columns: 1fr 1fr;
+            }
+            .question-text {
+                flex-wrap: wrap;
+            }
+            .concept-grid {
+                grid-template-columns: 1fr;
+            }
+            .tabela-assincrono {
+                font-size: 0.75rem;
+            }
+            .tabela-assincrono th,
+            .tabela-assincrono td {
+                padding: 6px 10px;
+            }
+            .code-wrapper .code-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .code-wrapper .code-header .code-actions {
+                justify-content: center;
+            }
+            .code-block {
+                font-size: 0.7rem;
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            .header h1 {
+                font-size: 1.2rem;
+            }
+            .badge {
+                font-size: 0.65rem;
+                padding: 3px 10px;
+            }
+            .options.true-false {
+                grid-template-columns: 1fr;
+            }
+            .code-block {
+                font-size: 0.6rem;
+                padding: 10px;
+                line-height: 1.6;
+            }
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            .card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+            .header {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .badge {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .option.correct {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .option.wrong {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .result-box {
+                border: 2px solid #667eea !important;
+            }
+            body {
+                background: white !important;
+                padding: 10px !important;
+            }
+            .container {
+                max-width: 100% !important;
+            }
+            .btn-top {
+                display: none !important;
+            }
+            .highlight-box {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .code-wrapper .code-header .code-actions button {
+                display: none !important;
+            }
+            .code-wrapper .code-header .code-title {
+                color: #333;
+            }
+            .code-block {
+                background: #f0f0f0;
+                color: #1a1a2e;
+            }
+            .code-block .comment {
+                color: #6c757d;
+            }
+            .code-block .keyword {
+                color: #d63384;
+            }
+            .code-block .string {
+                color: #28a745;
+            }
+            .code-block .function {
+                color: #007bff;
+            }
+            .code-block .variable {
+                color: #6f42c1;
+            }
+            .code-block .number {
+                color: #fd7e14;
+            }
+            .code-block .operator {
+                color: #dc3545;
+            }
+            .code-block .output {
+                color: #28a745;
+            }
+            .code-block .tag {
+                color: #dc3545;
+            }
+            .code-block .attribute {
+                color: #28a745;
+            }
+            .code-block .selector {
+                color: #d63384;
+            }
+            .code-block .property {
+                color: #007bff;
+            }
+            .code-block .value {
+                color: #28a745;
+            }
+            .code-block .kw {
+                color: #d63384;
+            }
+            .code-block .str {
+                color: #28a745;
+            }
+            .code-block .fn {
+                color: #007bff;
+            }
+            .code-block .cm {
+                color: #6c757d;
+            }
+            .code-block .num {
+                color: #fd7e14;
+            }
+            .tabela-assincrono th {
+                background: #667eea !important;
+                color: #fff !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- ============================================================
+        HEADER
+        ============================================================ -->
+        <div class="header">
+            <h1>📚 TEMA <span>9</span></h1>
+            <p>Funções Assíncronas</p>
+            <div class="badge-group">
+                <span class="badge">📖 Conceitos</span>
+                <span class="badge">📝 12 questões</span>
+                <span class="badge">⚡ async | await | Promises | Timers</span>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        INTRODUÇÃO
+        ============================================================ -->
+        <div class="card">
+            <h2>⚡ O que são Funções Assíncronas?</h2>
+
+            <div class="highlight-box yellow">
+                💡 <strong>Analogia:</strong> Imagine que você está em um restaurante. Você faz o pedido
+                (função assíncrona) e enquanto a comida não fica pronta (resposta da API), você pode
+                fazer outras coisas (continuar executando o código). Quando a comida fica pronta, você
+                recebe uma <strong>notificação</strong> e pode continuar o processo.
+            </div>
+
+            <p>
+                Uma <strong>função assíncrona</strong> (async function) é um tipo especial de construção
+                de código que facilita a execução de <strong>operações assíncronas</strong> de maneira
+                mais conveniente e legível. Essas operações incluem tarefas como fazer solicitações de rede,
+                ler arquivos, aguardar temporizadores e outras atividades que podem levar algum tempo.
+            </p>
+
+            <div class="highlight-box blue">
+                📌 <strong>Como funciona:</strong> JavaScript pode continuar tratando outras tarefas
+                enquanto uma operação assíncrona aguarda sua conclusão. Quando o resultado fica disponível,
+                o código associado à operação pode continuar.
+            </div>
+
+            <div class="highlight-box purple">
+                🔑 <strong>Palavras-chave:</strong>
+                <ul style="margin: 6px 0 0 20px;">
+                    <li><code>async</code> - declara que a função é assíncrona e <strong>sempre retorna uma Promise</strong></li>
+                    <li><code>await</code> - espera o resultado de uma Promise <strong>naquela função</strong></li>
+                    <li><code>Promise</code> - representa um valor que pode estar disponível no futuro</li>
+                    <li><code>try...catch</code> - trata erros em operações assíncronas</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box green">
+                💡 <strong>Importante:</strong> Uma função declarada com <code>async</code> sempre retorna
+                uma <strong>Promise</strong>. Isso conecta diretamente os conceitos de <code>async</code>,
+                <code>Promise</code> e <code>await</code>.
+                <div style="background:#f0f0f0; padding:6px 12px; border-radius:6px; margin-top:6px; font-family:monospace; font-size:0.8rem;">
+                    async function exemplo() { return "Olá"; } // Retorna uma Promise
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        PROMISES
+        ============================================================ -->
+        <div class="card">
+            <h2>📦 Promises</h2>
+
+            <p>
+                Uma <strong>Promise</strong> (promessa) é um objeto que representa a <strong>conclusão</strong>
+                ou <strong>falha</strong> de uma operação assíncrona. Ela pode estar em um dos três estados:
+            </p>
+
+            <table class="tabela-assincrono">
+                <thead>
+                    <tr>
+                        <th>Estado</th>
+                        <th>Descrição</th>
+                        <th>Exemplo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>⏳ Pendente</strong></td>
+                        <td>Estado inicial, a operação ainda não foi concluída</td>
+                        <td><span class="exemplo">Aguardando resposta da API</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>✅ Realizada (resolvida)</strong></td>
+                        <td>A operação foi concluída com sucesso</td>
+                        <td><span class="exemplo">Dados recebidos da API</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>❌ Rejeitada</strong></td>
+                        <td>A operação falhou</td>
+                        <td><span class="exemplo">Erro na requisição</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box yellow">
+                💡 <strong>Analogia:</strong> Uma Promise é como uma <strong>promessa</strong> que alguém faz.
+                Ela pode ser:
+                <ul style="margin: 6px 0 0 20px;">
+                    <li><strong>Cumprida</strong> → a pessoa cumpriu a promessa</li>
+                    <li><strong>Quebrada</strong> → a pessoa não cumpriu a promessa</li>
+                    <li><strong>Pendente</strong> → ainda não sabemos o que vai acontecer</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box green">
+                ✅ <strong>O que são resolve e reject?</strong>
+                <ul style="margin: 6px 0 0 20px;">
+                    <li><code>resolve()</code> → indica que a operação foi <strong>bem-sucedida</strong></li>
+                    <li><code>reject()</code> → indica que a operação <strong>falhou</strong></li>
+                </ul>
+                <p style="margin-top:4px; font-size:0.9rem;">
+                    💡 <strong>Exemplo:</strong> Promise = "Eu ainda não tenho o resultado, mas vou te entregar depois: com sucesso (resolve) ou com erro (reject)."
+                </p>
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-title">📄 promise-exemplo.js</span>
+                    <div class="code-actions">
+                        <button class="copy-btn" onclick="copiarCodigo(this, &#39;codigo-promise&#39;)">📋 Copiar</button>
+                        <button class="run-btn" onclick="executarOneCompiler(&#39;codigo-promise&#39;)">▶️ Executar</button>
+                    </div>
+                </div>
+                <div class="code-block" id="codigo-promise"><span class="comment">// ============================================================</span>
+<span class="comment">// TRABALHANDO COM PROMISES</span>
+<span class="comment">// ============================================================</span>
+
+<span class="comment">// 1. Criando uma Promise manualmente</span>
+<span class="kw">const</span> <span class="variable">minhaPromise</span> <span class="op">=</span> <span class="kw">new</span> <span class="fn">Promise</span>(<span class="kw">function</span>(resolve, reject) {
+    <span class="comment">// resolve → indica sucesso</span>
+    <span class="comment">// reject → indica falha</span>
+
+    <span class="kw">let</span> sucesso <span class="op">=</span> <span class="kw">true</span>;
+
+    <span class="kw">if</span> (sucesso) {
+        resolve(<span class="str">"✅ Operação concluída com sucesso!"</span>);
+    } <span class="kw">else</span> {
+        reject(<span class="str">"❌ Operação falhou!"</span>);
+    }
+});
+
+<span class="comment">// 2. Usando a Promise com then() e catch()</span>
+<span class="comment">// then() → executado no sucesso</span>
+<span class="comment">// catch() → executado no erro</span>
+<span class="variable">minhaPromise</span>
+    .<span class="fn">then</span>(<span class="kw">function</span>(resultado) {
+        <span class="fn">console</span>.<span class="fn">log</span>(resultado);
+    })
+    .<span class="fn">catch</span>(<span class="kw">function</span>(erro) {
+        <span class="fn">console</span>.<span class="fn">log</span>(erro);
+    });
+
+<span class="comment">// 3. Promise com setTimeout (simulando operação demorada)</span>
+<span class="kw">function</span> <span class="fn">esperar</span>(ms) {
+    <span class="kw">return</span> <span class="kw">new</span> <span class="fn">Promise</span>(<span class="kw">function</span>(resolve) {
+        <span class="fn">setTimeout</span>(<span class="kw">function</span>() {
+            resolve(<span class="str">"⏰ "</span> <span class="op">+</span> ms <span class="op">+</span> <span class="str">"ms se passaram"</span>);
+        }, ms);
+    });
+}
+
+<span class="variable">esperar</span>(<span class="number">2000</span>).<span class="fn">then</span>(<span class="kw">function</span>(mensagem) {
+    <span class="fn">console</span>.<span class="fn">log</span>(mensagem);
+});</div>
+                <span class="copy-feedback" id="feedback-promise">✅ Copiado!</span>
+            </div>
+
+            <div class="highlight-box blue">
+                💡 <strong>then/catch e async/await são duas formas de trabalhar com Promises.</strong>
+                <ul style="margin: 6px 0 0 20px;">
+                    <li><code>then/catch</code> → outra forma de trabalhar com Promises</li>
+                    <li><code>async/await</code> → sintaxe mais legível para trabalhar com Promises</li>
+                    <li>Ambas fazem a mesma coisa: lidam com operações assíncronas</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        ASYNC E AWAIT (COM TIMERS)
+        ============================================================ -->
+        <div class="card">
+            <h2>⚡ async e await</h2>
+
+            <div class="highlight-box yellow">
+                💡 <strong>Ordem de aprendizado recomendada:</strong>
+                <ol style="margin: 6px 0 0 20px; line-height: 1.8;">
+                    <li><strong>Promise</strong> → entenda o conceito</li>
+                    <li><strong>Timers</strong> → veja assincronicidade na prática</li>
+                    <li><strong>async/await</strong> → simplifique o código</li>
+                    <li><strong>fetch()</strong> → aplique em APIs reais</li>
+                </ol>
+            </div>
+
+            <h3>📌 Exemplo com setTimeout (mais simples)</h3>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-title">📄 async-await-simples.js</span>
+                    <div class="code-actions">
+                        <button class="copy-btn" onclick="copiarCodigo(this, &#39;codigo-async-simples&#39;)">📋 Copiar</button>
+                        <button class="run-btn" onclick="executarOneCompiler(&#39;codigo-async-simples&#39;)">▶️ Executar</button>
+                    </div>
+                </div>
+                <div class="code-block" id="codigo-async-simples"><span class="comment">// ============================================================</span>
+<span class="comment">// ASYNC/AWAIT - Exemplo com setTimeout</span>
+<span class="comment">// ============================================================</span>
+
+<span class="comment">// 1. Função que retorna uma Promise com setTimeout</span>
+<span class="kw">function</span> <span class="fn">esperar</span>() {
+    <span class="kw">return</span> <span class="kw">new</span> <span class="fn">Promise</span>(<span class="kw">function</span>(resolve) {
+        <span class="fn">setTimeout</span>(<span class="kw">function</span>() {
+            resolve(<span class="str">"✅ Pronto!"</span>);
+        }, <span class="number">2000</span>); <span class="comment">// 2 segundos</span>
+    });
+}
+
+<span class="comment">// 2. Função assíncrona usando await</span>
+<span class="kw">async</span> <span class="kw">function</span> <span class="fn">executar</span>() {
+    <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"⏳ Esperando..."</span>);
+
+    <span class="comment">// await espera o resultado da Promise antes de continuar ESTA função</span>
+    <span class="comment">// (mas o JavaScript pode executar outras tarefas enquanto espera)</span>
+    <span class="kw">let</span> resultado <span class="op">=</span> <span class="kw">await</span> <span class="fn">esperar</span>();
+
+    <span class="fn">console</span>.<span class="fn">log</span>(resultado);
+    <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"✅ Execução finalizada!"</span>);
+}
+
+<span class="comment">// 3. Executando a função</span>
+<span class="fn">executar</span>();</div>
+                <span class="copy-feedback" id="feedback-async-simples">✅ Copiado!</span>
+            </div>
+
+            <div class="highlight-box green">
+                💡 <strong>Entendendo o exemplo:</strong>
+                <ul style="margin: 6px 0 0 20px;">
+                    <li><code>esperar()</code> → retorna uma Promise que será resolvida após 2 segundos</li>
+                    <li><code>await esperar()</code> → <strong>espera o resultado</strong> da Promise antes de continuar <strong>aquela função</strong></li>
+                    <li>Enquanto espera, o JavaScript pode executar <strong>outras tarefas</strong></li>
+                    <li>Quando a Promise é resolvida, o código continua</li>
+                </ul>
+            </div>
+
+            <h3>📌 Exemplo com try...catch (tratamento de erros)</h3>
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-title">📄 async-try-catch.js</span>
+                    <div class="code-actions">
+                        <button class="copy-btn" onclick="copiarCodigo(this, &#39;codigo-try-catch&#39;)">📋 Copiar</button>
+                        <button class="run-btn" onclick="executarOneCompiler(&#39;codigo-try-catch&#39;)">▶️ Executar</button>
+                    </div>
+                </div>
+                <div class="code-block" id="codigo-try-catch"><span class="comment">// ============================================================</span>
+<span class="comment">// ASYNC/AWAIT com try...catch (tratamento de erros)</span>
+<span class="comment">// ============================================================</span>
+
+<span class="comment">// 1. Função que pode falhar</span>
+<span class="kw">function</span> <span class="fn">buscarDados</span>() {
+    <span class="kw">return</span> <span class="kw">new</span> <span class="fn">Promise</span>(<span class="kw">function</span>(resolve, reject) {
+        <span class="kw">let</span> sucesso <span class="op">=</span> <span class="kw">false</span>;
+
+        <span class="fn">setTimeout</span>(<span class="kw">function</span>() {
+            <span class="kw">if</span> (sucesso) {
+                resolve(<span class="str">"📦 Dados recebidos!"</span>);
+            } <span class="kw">else</span> {
+                reject(<span class="str">"❌ Erro ao buscar dados!"</span>);
+            }
+        }, <span class="number">1500</span>);
+    });
+}
+
+<span class="comment">// 2. Função assíncrona com try...catch</span>
+<span class="kw">async</span> <span class="kw">function</span> <span class="fn">executarBusca</span>() {
+    <span class="kw">try</span> {
+        <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"⏳ Buscando dados..."</span>);
+
+        <span class="kw">let</span> dados <span class="op">=</span> <span class="kw">await</span> <span class="fn">buscarDados</span>();
+
+        <span class="fn">console</span>.<span class="fn">log</span>(dados);
+    } <span class="kw">catch</span> (erro) {
+        <span class="comment">// Captura o erro se a Promise for rejeitada</span>
+        <span class="fn">console</span>.<span class="fn">log</span>(erro);
+    }
+}
+
+<span class="fn">executarBusca</span>();</div>
+                <span class="copy-feedback" id="feedback-try-catch">✅ Copiado!</span>
+            </div>
+
+            <div class="highlight-box orange">
+                ⚠️ <strong>ERRO COMUM:</strong> Utilizar <code>await</code> dentro de uma função que não é
+                <code>async</code>.
+                <p style="margin-top:4px;">
+                    💡 <strong>Exceção:</strong> Em <strong>módulos JavaScript</strong> (arquivos .mjs ou com
+                    <code>type="module"</code>), é possível usar <code>await</code> no nível superior
+                    (<strong>top-level await</strong>).
+                </p>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        TEMPORIZADORES (SEÇÃO DEDICADA)
+        ============================================================ -->
+        <div class="card">
+            <h2>⏰ Temporizadores</h2>
+
+            <p>
+                Os temporizadores são funções que permitem executar código <strong>após um determinado tempo</strong>
+                ou em <strong>intervalos regulares</strong>. Eles são fundamentais para entender
+                operações assíncronas.
+            </p>
+
+            <table class="tabela-assincrono">
+                <thead>
+                    <tr>
+                        <th>Função</th>
+                        <th>Descrição</th>
+                        <th>Exemplo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>setTimeout()</strong></td>
+                        <td>Executa <strong>uma vez</strong> após o tempo especificado</td>
+                        <td><span class="exemplo">setTimeout(fn, 2000)</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>setInterval()</strong></td>
+                        <td>Executa <strong>repetidamente</strong> a cada intervalo</td>
+                        <td><span class="exemplo">setInterval(fn, 1000)</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>clearTimeout()</strong></td>
+                        <td>Cancela um <code>setTimeout()</code></td>
+                        <td><span class="exemplo">clearTimeout(id)</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>clearInterval()</strong></td>
+                        <td>Cancela um <code>setInterval()</code></td>
+                        <td><span class="exemplo">clearInterval(id)</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-title">📄 temporizadores.js</span>
+                    <div class="code-actions">
+                        <button class="copy-btn" onclick="copiarCodigo(this, &#39;codigo-temporizadores&#39;)">📋 Copiar</button>
+                        <button class="run-btn" onclick="executarOneCompiler(&#39;codigo-temporizadores&#39;)">▶️ Executar</button>
+                    </div>
+                </div>
+                <div class="code-block" id="codigo-temporizadores"><span class="comment">// ============================================================</span>
+<span class="comment">// TEMPORIZADORES</span>
+<span class="comment">// ============================================================</span>
+
+<span class="comment">// 1. setTimeout - executa uma vez após o tempo</span>
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"⏳ Início"</span>);
+
+<span class="fn">setTimeout</span>(<span class="kw">function</span>() {
+    <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"✅ Mensagem exibida após 2 segundos!"</span>);
+}, <span class="number">2000</span>);
+
+<span class="comment">// 2. setTimeout com parâmetros</span>
+<span class="kw">function</span> <span class="fn">saudacao</span>(nome) {
+    <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Olá, "</span> <span class="op">+</span> nome <span class="op">+</span> <span class="str">"!"</span>);
+}
+
+<span class="fn">setTimeout</span>(saudacao, <span class="number">3000</span>, <span class="str">"Ana"</span>);
+
+<span class="comment">// 3. Cancelando um setTimeout</span>
+<span class="kw">let</span> <span class="variable">timeoutId</span> <span class="op">=</span> <span class="fn">setTimeout</span>(<span class="kw">function</span>() {
+    <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Esta mensagem não será exibida"</span>);
+}, <span class="number">5000</span>);
+
+<span class="fn">clearTimeout</span>(timeoutId);
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"⏹️ Timeout cancelado!"</span>);
+
+<span class="comment">// 4. setInterval - executa repetidamente</span>
+<span class="kw">let</span> contador <span class="op">=</span> <span class="number">0</span>;
+<span class="kw">let</span> <span class="variable">intervalId</span> <span class="op">=</span> <span class="fn">setInterval</span>(<span class="kw">function</span>() {
+    contador<span class="op">++</span>;
+    <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"⏱️ Contador:"</span> <span class="op">+</span> contador);
+
+    <span class="kw">if</span> (contador <span class="op">===</span> <span class="number">5</span>) {
+        <span class="fn">clearInterval</span>(intervalId);
+        <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"⏹️ Intervalo finalizado!"</span>);
+    }
+}, <span class="number">1000</span>);</div>
+                <span class="copy-feedback" id="feedback-temporizadores">✅ Copiado!</span>
+            </div>
+
+            <div class="highlight-box green">
+                💡 <strong>Resumo dos temporizadores:</strong>
+                <ul style="margin: 6px 0 0 20px;">
+                    <li><code>setTimeout()</code> → executa <strong>uma vez</strong> após o tempo</li>
+                    <li><code>setInterval()</code> → executa <strong>repetidamente</strong> a cada intervalo</li>
+                    <li><code>clearTimeout()</code> → cancela um setTimeout</li>
+                    <li><code>clearInterval()</code> → cancela um setInterval</li>
+                    <li>O tempo é sempre em <strong>milissegundos</strong> (1000ms = 1 segundo)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        FETCH COM ASYNC/AWAIT
+        ============================================================ -->
+        <div class="card">
+            <h2>🌐 fetch() com async/await</h2>
+
+            <p>
+                Agora que você já entende <strong>Promises</strong>, <strong>timers</strong> e
+                <strong>async/await</strong>, vamos aplicar esses conceitos em uma situação real:
+                fazer requisições para uma <strong>API</strong> usando <code>fetch()</code>.
+            </p>
+
+            <div class="highlight-box blue">
+                📌 <strong>O que é fetch()?</strong> É uma função que faz requisições HTTP e retorna uma
+                <strong>Promise</strong>. Combinado com <code>async/await</code>, fica muito mais fácil
+                trabalhar com APIs.
+            </div>
+
+            <div class="code-wrapper">
+                <div class="code-header">
+                    <span class="code-title">📄 fetch-async.js</span>
+                    <div class="code-actions">
+                        <button class="copy-btn" onclick="copiarCodigo(this, &#39;codigo-fetch&#39;)">📋 Copiar</button>
+                        <button class="run-btn" onclick="executarOneCompiler(&#39;codigo-fetch&#39;)">▶️ Executar</button>
+                    </div>
+                </div>
+                <div class="code-block" id="codigo-fetch"><span class="comment">// ============================================================</span>
+<span class="comment">// FETCH COM ASYNC/AWAIT + TRY...CATCH</span>
+<span class="comment">// ============================================================</span>
+
+<span class="comment">// 1. Função assíncrona para buscar dados de uma API</span>
+<span class="kw">async</span> <span class="kw">function</span> <span class="fn">obterUsuarios</span>() {
+    <span class="kw">try</span> {
+        <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"⏳ Buscando usuários..."</span>);
+
+        <span class="comment">// Passo 1: Faz a requisição para a API</span>
+        <span class="kw">let</span> resposta <span class="op">=</span> <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">"https://jsonplaceholder.typicode.com/users"</span>);
+
+        <span class="comment">// Passo 2: Verifica se a resposta foi bem-sucedida</span>
+        <span class="kw">if</span> (!resposta.<span class="property">ok</span>) {
+            <span class="kw">throw</span> <span class="kw">new</span> <span class="fn">Error</span>(<span class="str">"❌ Erro na requisição!"</span>);
+        }
+
+        <span class="comment">// Passo 3: Converte a resposta para JSON</span>
+        <span class="kw">let</span> dados <span class="op">=</span> <span class="kw">await</span> resposta.<span class="fn">json</span>();
+
+        <span class="comment">// Passo 4: Exibe os dados</span>
+        <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"✅ Usuários recebidos:"</span>);
+        <span class="fn">console</span>.<span class="fn">log</span>(dados);
+    } <span class="kw">catch</span> (erro) {
+        <span class="comment">// Passo 5: Captura qualquer erro</span>
+        <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"❌ Erro:"</span>, erro.<span class="property">message</span>);
+    }
+}
+
+<span class="comment">// 2. Executando a função</span>
+<span class="fn">obterUsuarios</span>();</div>
+                <span class="copy-feedback" id="feedback-fetch">✅ Copiado!</span>
+            </div>
+
+            <div class="highlight-box green">
+                💡 <strong>Fluxo do fetch() com async/await (passo a passo):</strong>
+                <ol style="margin: 6px 0 0 20px; line-height: 1.8;">
+                    <li><code>await fetch(url)</code> → aguarda a resposta da API</li>
+                    <li><code>resposta.ok</code> → verifica se a requisição foi bem-sucedida</li>
+                    <li><code>await resposta.json()</code> → converte a resposta para JSON</li>
+                    <li><code>catch (erro)</code> → captura qualquer erro (rede, API, etc.)</li>
+                </ol>
+            </div>
+
+            <div class="highlight-box yellow">
+                💡 <strong>Observação importante:</strong> Este exemplo combina vários conceitos:
+                <ul style="margin: 6px 0 0 20px;">
+                    <li><code>async/await</code> → facilita a leitura do código</li>
+                    <li><code>try...catch</code> → trata erros de forma elegante</li>
+                    <li><code>fetch()</code> → faz a requisição HTTP</li>
+                    <li><code>resposta.json()</code> → converte a resposta</li>
+                </ul>
+                <p style="margin-top:4px;">É normal sentir um pouco de dificuldade no início - isso é avançado!</p>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        CONCEITOS EM GRID
+        ============================================================ -->
+        <div class="card">
+            <h2>🎯 Resumo das Funções Assíncronas</h2>
+
+            <div class="concept-grid">
+                <div class="concept-box">
+                    <h4>⚡ async/await</h4>
+                    <p>Facilita a escrita de código assíncrono</p>
+                    <div class="code-mini">
+                        <span class="c-keyword">async</span> <span class="c-keyword">function</span> nome() {<br>
+                        &nbsp;&nbsp;<span class="c-keyword">let</span> dados <span class="c-operator">=</span> <span class="c-keyword">await</span> fetch(url);<br>
+                        }
+                    </div>
+                </div>
+                <div class="concept-box">
+                    <h4>📦 Promise</h4>
+                    <p>Representa um valor futuro</p>
+                    <div class="code-mini">
+                        <span class="c-keyword">new</span> Promise((resolve, reject) =&gt; {<br>
+                        &nbsp;&nbsp;resolve(valor);<br>
+                        });
+                    </div>
+                </div>
+                <div class="concept-box">
+                    <h4>⏰ Temporizadores</h4>
+                    <p>Executam código após um tempo</p>
+                    <div class="code-mini">
+                        setTimeout(fn, ms);<br>
+                        setInterval(fn, ms);
+                    </div>
+                </div>
+                <div class="concept-box">
+                    <h4>🛡️ try...catch</h4>
+                    <p>Tratamento de erros em async/await</p>
+                    <div class="code-mini">
+                        <span class="c-keyword">try</span> {<br>
+                        &nbsp;&nbsp;<span class="c-keyword">await</span> operacao();<br>
+                        } <span class="c-keyword">catch</span> (erro) {<br>
+                        &nbsp;&nbsp;<span class="c-comment">// trata erro</span><br>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        AVALIAÇÃO
+        ============================================================ -->
+        <div class="card" id="testes">
+            <h2>✏️ Exercício de Fixação</h2>
+            <p>Responda as <strong>12 questões</strong> sobre Funções Assíncronas.</p>
+            <p style="margin-bottom: 15px;">Ao final, clique em <strong>"Verificar Respostas"</strong> para corrigir.</p>
+
+            <!-- ===== Q1 ===== -->
+            <div class="question" id="q1">
+                <div class="question-text">
+                    <span class="question-number">1</span>
+                    Qual palavra-chave é usada para declarar uma função assíncrona?
+                </div>
+                <div class="options">
+                    <div class="option disabled"><input type="radio" name="q1" value="A" disabled=""><label>await</label></div>
+                    <div class="option correct disabled"><input type="radio" name="q1" value="B" disabled=""><label>async</label></div>
+                    <div class="option disabled"><input type="radio" name="q1" value="C" disabled=""><label>promise</label></div>
+                    <div class="option disabled"><input type="radio" name="q1" value="D" disabled=""><label>then</label></div>
+                </div>
+            </div>
+
+            <!-- ===== Q2 ===== -->
+            <div class="question" id="q2">
+                <div class="question-text">
+                    <span class="question-number">2</span>
+                    Qual palavra-chave é usada para esperar o resultado de uma Promise?
+                </div>
+                <div class="options">
+                    <div class="option correct disabled"><input type="radio" name="q2" value="A" disabled=""><label>await</label></div>
+                    <div class="option disabled"><input type="radio" name="q2" value="B" disabled=""><label>async</label></div>
+                    <div class="option disabled"><input type="radio" name="q2" value="C" disabled=""><label>promise</label></div>
+                    <div class="option disabled"><input type="radio" name="q2" value="D" disabled=""><label>catch</label></div>
+                </div>
+            </div>
+
+            <!-- ===== Q3 ===== -->
+            <div class="question" id="q3">
+                <div class="question-text">
+                    <span class="question-number">3</span>
+                    Quantos estados uma Promise pode ter?
+                </div>
+                <div class="options">
+                    <div class="option disabled"><input type="radio" name="q3" value="A" disabled=""><label>2</label></div>
+                    <div class="option correct disabled"><input type="radio" name="q3" value="B" disabled=""><label>3</label></div>
+                    <div class="option disabled"><input type="radio" name="q3" value="C" disabled=""><label>4</label></div>
+                    <div class="option disabled"><input type="radio" name="q3" value="D" disabled=""><label>5</label></div>
+                </div>
+            </div>
+
+            <!-- ===== Q4 ===== -->
+            <div class="question" id="q4">
+                <div class="question-text">
+                    <span class="question-number">4</span>
+                    Qual método é usado para executar código após uma Promise ser resolvida com sucesso?
+                </div>
+                <div class="options">
+                    <div class="option disabled"><input type="radio" name="q4" value="A" disabled=""><label>catch()</label></div>
+                    <div class="option disabled"><input type="radio" name="q4" value="B" disabled=""><label>finally()</label></div>
+                    <div class="option correct disabled"><input type="radio" name="q4" value="C" disabled=""><label>then()</label></div>
+                    <div class="option disabled"><input type="radio" name="q4" value="D" disabled=""><label>await()</label></div>
+                </div>
+            </div>
+
+            <!-- ===== Q5 ===== -->
+            <div class="question" id="q5">
+                <div class="question-text">
+                    <span class="question-number">5</span>
+                    Qual função executa um bloco de código <strong>repetidamente</strong> em intervalos?
+                </div>
+                <div class="options">
+                    <div class="option disabled"><input type="radio" name="q5" value="A" disabled=""><label>setTimeout()</label></div>
+                    <div class="option correct disabled"><input type="radio" name="q5" value="B" disabled=""><label>setInterval()</label></div>
+                    <div class="option disabled"><input type="radio" name="q5" value="C" disabled=""><label>clearTimeout()</label></div>
+                    <div class="option disabled"><input type="radio" name="q5" value="D" disabled=""><label>clearInterval()</label></div>
+                </div>
+            </div>
+
+            <!-- ===== Q6 (INTERPRETAÇÃO - ASYNC/AWAIT) ===== -->
+            <div class="question" id="q6">
+                <div class="question-text">
+                    <span class="question-number">6</span>
+                    <strong>Analise o código:</strong>
+                    <div class="codigo-exemplo">
+                        <span class="keyword">function</span> <span class="fn">esperar</span>() {<br>
+                        &nbsp;&nbsp;<span class="keyword">return</span> <span class="keyword">new</span> <span class="fn">Promise</span>(<span class="keyword">function</span>(resolve) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">setTimeout</span>(<span class="keyword">function</span>() {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resolve(<span class="string">"Pronto!"</span>);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}, <span class="number">1000</span>);<br>
+                        &nbsp;&nbsp;});<br>
+                        }<br><br>
+                        <span class="keyword">async</span> <span class="keyword">function</span> <span class="fn">executar</span>() {<br>
+                        &nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="string">"Início"</span>);<br>
+                        &nbsp;&nbsp;<span class="keyword">let</span> resultado <span class="operator">=</span> <span class="keyword">await</span> <span class="fn">esperar</span>();<br>
+                        &nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(resultado);<br>
+                        &nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="string">"Fim"</span>);<br>
+                        }<br><br>
+                        <span class="fn">executar</span>();
+                    </div>
+                    Qual é a ordem correta das mensagens no console?
+                </div>
+                <div class="options">
+                    <div class="option disabled"><input type="radio" name="q6" value="A" disabled=""><label>Pronto! → Início → Fim</label></div>
+                    <div class="option disabled"><input type="radio" name="q6" value="B" disabled=""><label>Início → Fim → Pronto!</label></div>
+                    <div class="option correct disabled"><input type="radio" name="q6" value="C" disabled=""><label>Início → Pronto! → Fim</label></div>
+                    <div class="option disabled"><input type="radio" name="q6" value="D" disabled=""><label>Fim → Pronto! → Início</label></div>
+                </div>
+            </div>
+
+            <!-- ===== Q7 ===== -->
+            <div class="question" id="q7">
+                <div class="question-text">
+                    <span class="question-number">7</span>
+                    O que faz a função <code>clearInterval()</code>?
+                </div>
+                <div class="options">
+                    <div class="option disabled"><input type="radio" name="q7" value="A" disabled=""><label>Inicia um intervalo</label></div>
+                    <div class="option correct disabled"><input type="radio" name="q7" value="B" disabled=""><label>Cancela um intervalo</label></div>
+                    <div class="option disabled"><input type="radio" name="q7" value="C" disabled=""><label>Cancela um setTimeout</label></div>
+                    <div class="option disabled"><input type="radio" name="q7" value="D" disabled=""><label>Executa uma vez</label></div>
+                </div>
+            </div>
+
+            <!-- ===== Q8 ===== -->
+            <div class="question" id="q8">
+                <div class="question-text">
+                    <span class="question-number">8</span>
+                    Uma função declarada com <code>async</code> sempre retorna qual tipo de dado?
+                </div>
+                <div class="options">
+                    <div class="option disabled"><input type="radio" name="q8" value="A" disabled=""><label>String</label></div>
+                    <div class="option disabled"><input type="radio" name="q8" value="B" disabled=""><label>Number</label></div>
+                    <div class="option correct disabled"><input type="radio" name="q8" value="C" disabled=""><label>Promise</label></div>
+                    <div class="option disabled"><input type="radio" name="q8" value="D" disabled=""><label>Array</label></div>
+                </div>
+            </div>
+
+            <!-- ===== Q9 ===== -->
+            <div class="question true-false" id="q9">
+                <div class="question-text">
+                    <span class="question-number">9</span>
+                    Em módulos JavaScript, é possível usar <code>await</code> no nível superior (top-level await).
+                </div>
+                <div class="options true-false">
+                    <div class="option correct disabled"><input type="radio" name="q9" value="V" disabled=""><label>✅ Verdadeiro</label></div>
+                    <div class="option disabled"><input type="radio" name="q9" value="F" disabled=""><label>❌ Falso</label></div>
+                </div>
+            </div>
+
+            <!-- ===== Q10 ===== -->
+            <div class="question true-false" id="q10">
+                <div class="question-text">
+                    <span class="question-number">10</span>
+                    O método <code>clearTimeout()</code> é usado para parar um <code>setInterval()</code>.
+                </div>
+                <div class="options true-false">
+                    <div class="option disabled"><input type="radio" name="q10" value="V" disabled=""><label>✅ Verdadeiro</label></div>
+                    <div class="option correct disabled"><input type="radio" name="q10" value="F" disabled=""><label>❌ Falso</label></div>
+                </div>
+            </div>
+
+            <!-- ===== Q11 ===== -->
+            <div class="question" id="q11">
+                <div class="question-text">
+                    <span class="question-number">11</span>
+                    Qual bloco é usado para tratar erros em uma função <code>async</code> com <code>await</code>?
+                </div>
+                <div class="options">
+                    <div class="option disabled"><input type="radio" name="q11" value="A" disabled=""><label>then...catch</label></div>
+                    <div class="option correct disabled"><input type="radio" name="q11" value="B" disabled=""><label>try...catch</label></div>
+                    <div class="option disabled"><input type="radio" name="q11" value="C" disabled=""><label>if...else</label></div>
+                    <div class="option disabled"><input type="radio" name="q11" value="D" disabled=""><label>switch...case</label></div>
+                </div>
+            </div>
+
+            <!-- ===== Q12 (INTERPRETAÇÃO - FETCH) ===== -->
+            <div class="question" id="q12">
+                <div class="question-text">
+                    <span class="question-number">12</span>
+                    <strong>Analise o código:</strong>
+                    <div class="codigo-exemplo">
+                        <span class="keyword">async</span> <span class="keyword">function</span> <span class="fn">buscar</span>() {<br>
+                        &nbsp;&nbsp;<span class="kw">try</span> {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">let</span> resposta <span class="operator">=</span> <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">"https://api.exemplo.com/dados"</span>);<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">let</span> dados <span class="operator">=</span> <span class="kw">await</span> resposta.<span class="fn">json</span>();<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(dados);<br>
+                        &nbsp;&nbsp;} <span class="kw">catch</span> (erro) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Erro:"</span>, erro.<span class="property">message</span>);<br>
+                        &nbsp;&nbsp;}<br>
+                        }<br><br>
+                        <span class="fn">buscar</span>();
+                    </div>
+                    O que acontece se a requisição <code>fetch()</code> falhar?
+                </div>
+                <div class="options">
+                    <div class="option disabled"><input type="radio" name="q12" value="A" disabled=""><label>O código continua normalmente</label></div>
+                    <div class="option correct disabled"><input type="radio" name="q12" value="B" disabled=""><label>O bloco <code>catch</code> é executado</label></div>
+                    <div class="option disabled"><input type="radio" name="q12" value="C" disabled=""><label>A função para de executar</label></div>
+                    <div class="option disabled"><input type="radio" name="q12" value="D" disabled=""><label>Nada acontece</label></div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;" class="no-print">
+                <button class="btn" onclick="corrigirQuiz()">✅ Verificar Respostas</button>
+                <button class="btn btn-secondary" onclick="limparQuiz()">🔄 Limpar respostas</button>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        RESULTADO
+        ============================================================ -->
+        <div class="card result-box show" id="resultadoQuiz">
+            <h2>📊 Resultado do Quiz</h2>
+            <div class="score" id="pontuacao">12 / 12</div>
+            <p style="margin: 10px 0;">Respostas corretas:</p>
+            <div id="feedback">
+                            <div class="feedback-item correct">
+                                ✅ Q1 - Correta
+                                <div class="explicacao">async é a palavra-chave usada para declarar funções assíncronas.</div>
+                            </div>
+                        
+                            <div class="feedback-item correct">
+                                ✅ Q2 - Correta
+                                <div class="explicacao">await é usado para esperar o resultado de uma Promise naquela função.</div>
+                            </div>
+                        
+                            <div class="feedback-item correct">
+                                ✅ Q3 - Correta
+                                <div class="explicacao">Uma Promise pode estar em 3 estados: Pendente, Realizada ou Rejeitada.</div>
+                            </div>
+                        
+                            <div class="feedback-item correct">
+                                ✅ Q4 - Correta
+                                <div class="explicacao">then() é executado quando a Promise é resolvida com sucesso.</div>
+                            </div>
+                        
+                            <div class="feedback-item correct">
+                                ✅ Q5 - Correta
+                                <div class="explicacao">setInterval() executa um bloco de código repetidamente em intervalos.</div>
+                            </div>
+                        
+                            <div class="feedback-item correct">
+                                ✅ Q6 - Correta
+                                <div class="explicacao">O código espera 1 segundo (await esperar()) antes de exibir "Pronto!".</div>
+                            </div>
+                        
+                            <div class="feedback-item correct">
+                                ✅ Q7 - Correta
+                                <div class="explicacao">clearInterval() cancela um intervalo criado com setInterval().</div>
+                            </div>
+                        
+                            <div class="feedback-item correct">
+                                ✅ Q8 - Correta
+                                <div class="explicacao">Uma função async sempre retorna uma Promise (mesmo que você retorne um valor simples).</div>
+                            </div>
+                        
+                            <div class="feedback-item correct">
+                                ✅ Q9 - Correta
+                                <div class="explicacao">Em módulos JavaScript, existe top-level await (await no nível superior).</div>
+                            </div>
+                        
+                            <div class="feedback-item correct">
+                                ✅ Q10 - Correta
+                                <div class="explicacao">clearTimeout() cancela setTimeout(), clearInterval() cancela setInterval().</div>
+                            </div>
+                        
+                            <div class="feedback-item correct">
+                                ✅ Q11 - Correta
+                                <div class="explicacao">try...catch é usado para tratar erros em funções async com await.</div>
+                            </div>
+                        
+                            <div class="feedback-item correct">
+                                ✅ Q12 - Correta
+                                <div class="explicacao">Se a requisição fetch() falhar, o bloco catch é executado e exibe a mensagem de erro.</div>
+                            </div>
+                        
+                        <div class="highlight-box green" style="margin-top: 15px; text-align: left;">
+                            🎉 <strong>PARABÉNS! Você acertou todas!</strong> Excelente domínio sobre Funções Assíncronas!
+                        </div>
+                    </div>
+
+            <div style="margin-top: 20px;" class="no-print">
+                <button class="btn btn-success" onclick="window.print()">🖨️ Imprimir (PDF)</button>
+                <button class="btn btn-danger" onclick="limparQuiz()">🔄 Recomeçar</button>
+            </div>
+            <div class="highlight-box blue" style="margin-top: 15px; text-align: left;">
+                📸 <strong>IMPORTANTE:</strong> Clique em "Imprimir" para salvar o resultado em PDF.
+            </div>
+        </div>
+
+        <!-- ============================================================
+        FOOTER
+        ============================================================ -->
+        <div class="footer no-print">
+            <p>📚 TEMA 9 - Funções Assíncronas | Material de Estudo + Exercício de Fixação</p>
+            <p>⚡ async | await | Promises | Timers | try...catch | fetch</p>
+        </div>
+
+    </div>
+
+    <!-- ============================================================
+    BOTÃO TOPO
+    ============================================================ -->
+    <button class="btn-top no-print" onclick="window.scrollTo({top: 0, behavior: &#39;smooth&#39;})">⬆️ Topo</button>
+
+    <!-- ============================================================
+    SCRIPTS
+    ============================================================ -->
+    <script>
+        // ============================================================
+        // FUNÇÕES DOS BOTÕES DE CÓDIGO
+        // ============================================================
+
+        function copiarCodigo(btn, elementId) {
+            var codeElement = document.getElementById(elementId);
+            var codeText = codeElement.textContent;
+            var cleanCode = codeText.trim();
+
+            navigator.clipboard.writeText(cleanCode).then(function() {
+                var feedbackId = elementId.replace('codigo-', 'feedback-');
+                var feedback = document.getElementById(feedbackId);
+                if (feedback) {
+                    feedback.classList.add('show');
+                    setTimeout(function() {
+                        feedback.classList.remove('show');
+                    }, 2000);
+                }
+
+                var originalText = btn.textContent;
+                btn.textContent = '✅ Copiado!';
+                setTimeout(function() {
+                    btn.textContent = originalText;
+                }, 2000);
+            }).catch(function() {
+                alert('Não foi possível copiar. Selecione o código manualmente.');
+            });
+        }
+
+        // ============================================================
+        // FUNÇÃO: EXECUTAR NO ONECOMPILER
+        // ============================================================
+        function executarOneCompiler(elementId) {
+            var codeElement = document.getElementById(elementId);
+            var codeText = codeElement.textContent;
+            var cleanCode = codeText.trim();
+            var encodedCode = encodeURIComponent(cleanCode);
+            var url = 'https://onecompiler.com/javascript?code=' + encodedCode;
+            window.open(url, '_blank');
+        }
+
+        // ============================================================
+        // GABARITO OFICIAL
+        // ============================================================
+        const gabarito = {
+            q1: 'B', // async
+            q2: 'A', // await
+            q3: 'B', // 3
+            q4: 'C', // then()
+            q5: 'B', // setInterval()
+            q6: 'C', // Início → Pronto! → Fim
+            q7: 'B', // Cancela um intervalo
+            q8: 'C', // Promise
+            q9: 'V', // Verdadeiro (top-level await)
+            q10: 'F', // Falso (clearTimeout para setTimeout)
+            q11: 'B', // try...catch
+            q12: 'B' // O bloco catch é executado
+        };
+
+        // ============================================================
+        // EXPLICAÇÕES
+        // ============================================================
+        const explicacoes = {
+            q1: 'async é a palavra-chave usada para declarar funções assíncronas.',
+            q2: 'await é usado para esperar o resultado de uma Promise naquela função.',
+            q3: 'Uma Promise pode estar em 3 estados: Pendente, Realizada ou Rejeitada.',
+            q4: 'then() é executado quando a Promise é resolvida com sucesso.',
+            q5: 'setInterval() executa um bloco de código repetidamente em intervalos.',
+            q6: 'O código espera 1 segundo (await esperar()) antes de exibir "Pronto!".',
+            q7: 'clearInterval() cancela um intervalo criado com setInterval().',
+            q8: 'Uma função async sempre retorna uma Promise (mesmo que você retorne um valor simples).',
+            q9: 'Em módulos JavaScript, existe top-level await (await no nível superior).',
+            q10: 'clearTimeout() cancela setTimeout(), clearInterval() cancela setInterval().',
+            q11: 'try...catch é usado para tratar erros em funções async com await.',
+            q12: 'Se a requisição fetch() falhar, o bloco catch é executado e exibe a mensagem de erro.'
+        };
+
+        // ============================================================
+        // FUNÇÕES DO QUIZ
+        // ============================================================
+        function corrigirQuiz() {
+            let acertos = 0;
+            let feedbackHTML = '';
+            let todasRespondidas = true;
+
+            for (let [id, gab] of Object.entries(gabarito)) {
+                const selected = document.querySelector(`input[name="${id}"]:checked`);
+                const questionDiv = document.getElementById(id);
+                const options = questionDiv.querySelectorAll('.option');
+
+                if (!selected) {
+                    todasRespondidas = false;
+                    options.forEach(opt => opt.classList.add('disabled'));
+                    continue;
+                }
+
+                const resposta = selected.value;
+                const isCorrect = resposta === gab;
+
+                options.forEach(opt => {
+                    const radio = opt.querySelector('input[type="radio"]');
+                    if (radio.value === gab) {
+                        opt.classList.add('correct');
+                    } else if (radio.checked && radio.value !== gab) {
+                        opt.classList.add('wrong');
+                    }
+                    radio.disabled = true;
+                    opt.classList.add('disabled');
+                });
+
+                const num = id.replace('q', '');
+                if (isCorrect) {
+                    acertos++;
+                    feedbackHTML += `
+                            <div class="feedback-item correct">
+                                ✅ Q${num} - Correta
+                                <div class="explicacao">${explicacoes[id]}</div>
+                            </div>
+                        `;
+                } else {
+                    feedbackHTML += `
+                            <div class="feedback-item wrong">
+                                ❌ Q${num} - Incorreta
+                                <div class="explicacao">${explicacoes[id]}</div>
+                            </div>
+                        `;
+                }
+            }
+
+            if (!todasRespondidas) {
+                alert('⚠️ Responda todas as questões antes de finalizar!');
+                return;
+            }
+
+            document.getElementById('pontuacao').textContent = acertos + ' / 12';
+            document.getElementById('feedback').innerHTML = feedbackHTML;
+            document.getElementById('resultadoQuiz').classList.add('show');
+
+            document.getElementById('resultadoQuiz').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            let mensagem = '';
+            if (acertos === 12) {
+                mensagem = `
+                        <div class="highlight-box green" style="margin-top: 15px; text-align: left;">
+                            🎉 <strong>PARABÉNS! Você acertou todas!</strong> Excelente domínio sobre Funções Assíncronas!
+                        </div>
+                    `;
+            } else if (acertos >= 9) {
+                mensagem = `
+                        <div class="highlight-box blue" style="margin-top: 15px; text-align: left;">
+                            💪 <strong>Bom trabalho!</strong> Você acertou ${acertos}/12. Revise os tópicos que errou!
+                        </div>
+                    `;
+            } else if (acertos >= 6) {
+                mensagem = `
+                        <div class="highlight-box tip" style="margin-top: 15px; text-align: left;">
+                            📚 <strong>Continue praticando!</strong> Você acertou ${acertos}/12. Reveja o material para fixar!
+                        </div>
+                    `;
+            } else {
+                mensagem = `
+                        <div class="highlight-box red" style="margin-top: 15px; text-align: left;">
+                            📚 <strong>Que tal revisar o conteúdo novamente?</strong> Você acertou ${acertos}/12. Releia o material!
+                        </div>
+                    `;
+            }
+            document.getElementById('feedback').innerHTML += mensagem;
+        }
+
+        function limparQuiz() {
+            const radios = document.querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => {
+                radio.checked = false;
+                radio.disabled = false;
+            });
+
+            const options = document.querySelectorAll('.option');
+            options.forEach(opt => {
+                opt.classList.remove('correct', 'wrong', 'disabled');
+            });
+
+            document.getElementById('resultadoQuiz').classList.remove('show');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ============================================================
+        // CLICK NAS OPÇÕES
+        // ============================================================
+        document.querySelectorAll('.option').forEach(opt => {
+            opt.addEventListener('click', function(e) {
+                if (this.classList.contains('disabled')) return;
+                const radio = this.querySelector('input[type="radio"]');
+                if (radio) {
+                    radio.checked = true;
+                    const event = new Event('change', { bubbles: true });
+                    radio.dispatchEvent(event);
+                }
+            });
+        });
+    </script>
+
+
+</body></html>

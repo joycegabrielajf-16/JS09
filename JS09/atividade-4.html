@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+    </style>
+    <title>Verificar Dia da Semana</title>
+</head>
+<body>
+
+    <h2>Verificar Dia da Semana</h2>
+
+    <label for="numero">Digite um número de 1 a 7:</label>
+    <input type="number" id="numero" min="1" max="7">
+    <button onclick="verificarDia()">Verificar</button>
+
+    <p id="resultado"></p>
+
+    <script>
+        function verificarDia() {
+            const numero = parseInt(document.getElementById("numero").value);
+
+            let dia;
+
+            // COMPLETE O SWITCH ABAIXO
+            switch (numero) {
+                case 1:
+                    dia = "Domingo";
+                    break;
+                case 2:
+                    dia = "Segunda-feira";
+                    break;
+                case 3:
+                    dia = "Terça-feira";
+                    break;
+                case 4:
+                    dia = "Quarta-feira";
+                    break;
+                case 5:
+                    dia = "Quinta-feira";
+                    break;
+                case 6:
+                    dia = "Sexta-feira";
+                    break;
+                case 7:
+                    dia = "Sábado";
+                    break;
+                default:
+                    dia = "Número inválido";
+            }
+
+            document.getElementById("resultado").innerText = "Dia da semana: " + dia;
+        }
+    </script>
+
+</body>
+</html>
+                    

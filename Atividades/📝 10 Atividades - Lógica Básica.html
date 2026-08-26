@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<!-- saved from url=(0039)https://almeida-cma.github.io/desafios/ -->
+<html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📝 10 Atividades - Lógica Básica</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            text-align: center;
+            color: #1a1a2e;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+        }
+
+        .header h1 span {
+            color: #1a1a2e;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .badge-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .badge {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 5px 16px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            color: #b8860b;
+            margin-bottom: 15px;
+            border-left: 5px solid #f7971e;
+            padding-left: 15px;
+            font-size: 1.4rem;
+        }
+
+        .card p {
+            color: #2c3e50;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+
+        .atividade {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 2px solid #dee2e6;
+            transition: all 0.3s;
+        }
+
+        .atividade:hover {
+            border-color: #f7971e;
+        }
+
+        .atividade .numero {
+            display: inline-block;
+            background: #f7971e;
+            color: #1a1a2e;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-weight: bold;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+
+        .atividade .titulo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            display: inline-block;
+        }
+
+        .atividade .topico {
+            display: inline-block;
+            background: #6c757d;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 12px;
+            border-radius: 30px;
+            margin-left: 10px;
+            font-weight: 600;
+            vertical-align: middle;
+        }
+
+        .atividade .enunciado {
+            margin: 15px 0 12px 0;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 10px;
+            border-left: 4px solid #f7971e;
+        }
+
+        .atividade .enunciado p {
+            margin-bottom: 6px;
+        }
+
+        .atividade .enunciado ul {
+            margin: 6px 0 6px 20px;
+        }
+
+        .atividade .enunciado li {
+            color: #2c3e50;
+            line-height: 1.8;
+        }
+
+        .atividade .enunciado strong {
+            color: #1a1a2e;
+        }
+
+        .atividade .enunciado .dados {
+            background: #e9ecef;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-family: monospace;
+            display: inline-block;
+            margin: 4px 0;
+        }
+
+        .saida {
+            background: #1a1a2e;
+            color: #e0e0e0;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            margin: 8px 0;
+            white-space: pre-wrap;
+            border: 2px solid #28a745;
+        }
+
+        .saida .rotulo {
+            color: #28a745;
+            font-weight: bold;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .dica {
+            background: #fff3cd;
+            padding: 8px 14px;
+            border-radius: 8px;
+            margin: 8px 0;
+            font-size: 0.9rem;
+            border-left: 4px solid #ffc107;
+        }
+
+        .dica strong {
+            color: #856404;
+        }
+
+        .campo-saida {
+            margin: 12px 0;
+        }
+
+        .campo-saida textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            resize: vertical;
+            min-height: 80px;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .campo-saida textarea:focus {
+            outline: none;
+            border-color: #f7971e;
+            box-shadow: 0 0 0 3px rgba(247, 151, 30, 0.2);
+        }
+
+        .campo-saida label {
+            display: block;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 4px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #f7971e, #ffd200);
+            color: #1a1a2e;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            margin: 4px;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 5px 15px rgba(247, 151, 30, 0.4);
+        }
+
+        .btn-sm {
+            padding: 6px 16px;
+            font-size: 0.8rem;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .highlight-box {
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin: 8px 0;
+        }
+
+        .highlight-box.green {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+        }
+
+        .highlight-box.orange {
+            background: #ffe5cc;
+            border-left: 4px solid #fd7e14;
+        }
+
+        .highlight-box.red {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+        }
+
+        .highlight-box.blue {
+            background: #d1ecf1;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .result-box {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            border: 3px solid #f7971e;
+            display: none;
+            margin-top: 20px;
+        }
+
+        .result-box.show {
+            display: block;
+        }
+
+        .score {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #b8860b;
+        }
+
+        .resultado-item {
+            padding: 4px 0;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+
+        .resultado-item.correct {
+            color: #28a745;
+        }
+
+        .resultado-item.wrong {
+            color: #dc3545;
+        }
+
+        .comparacao {
+            display: flex;
+            gap: 20px;
+            margin: 8px 0;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+
+        .comparacao .esperado {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .comparacao .obtido {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .comparacao .rotulo-comp {
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #495057;
+        }
+
+        .comparacao .texto-esperado {
+            background: #d4edda;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            font-size: 0.8rem;
+            margin-top: 2px;
+        }
+
+        .comparacao .texto-obtido {
+            background: #f8f9fa;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            font-size: 0.8rem;
+            margin-top: 2px;
+        }
+
+        .comparacao .texto-obtido.diferente {
+            background: #f8d7da;
+            border: 1px solid #dc3545;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+        }
+
+        .btn-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #f7971e;
+            color: #1a1a2e;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-top:hover {
+            transform: scale(1.05);
+        }
+
+        .no-print {
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                padding: 18px;
+            }
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            .header {
+                padding: 20px;
+            }
+            .atividade {
+                padding: 15px;
+            }
+            .btn-group {
+                flex-direction: column;
+            }
+            .btn-group .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .comparacao {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            .card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+            .header {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .badge {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            body {
+                background: white !important;
+                padding: 10px !important;
+            }
+            .container {
+                max-width: 100% !important;
+            }
+            .btn-top {
+                display: none !important;
+            }
+            .atividade {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                border: 1px solid #ddd;
+            }
+            .saida {
+                background: #f5f5f5;
+                color: #1a1a2e;
+                border-color: #28a745;
+            }
+            .saida .rotulo {
+                color: #28a745;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="header">
+            <h1>📝 10 Atividades - <span>Lógica Básica</span></h1>
+            <p>Variáveis | Condicionais | Laços | Arrays | Funções</p>
+            <div class="badge-group">
+                <span class="badge">📌 10 exercícios</span>
+                <span class="badge">✅ Nível Fácil</span>
+                <span class="badge">💻 Navegador / OneCompiler</span>
+                <span class="badge">📊 Comparação de Saída</span>
+            </div>
+        </div>
+
+        <!-- INSTRUÇÕES -->
+        <div class="card no-print">
+            <h2>📖 Instruções</h2>
+            <ol style="margin: 10px 0 10px 25px; color: #2c3e50; line-height: 1.8;">
+                <li>Leia o <strong>enunciado</strong> com atenção</li>
+                <li>Os <strong>valores de entrada</strong> estão definidos no enunciado</li>
+                <li>Analise a <strong>saída esperada</strong> para entender o que deve ser feito</li>
+                <li><strong>ESCREVA O CÓDIGO</strong> em um editor (navegador, VS Code, OneCompiler)</li>
+                <li>Execute o código e <strong>copie a saída do console</strong></li>
+                <li>Cole a saída no campo <strong>"Saída do seu código"</strong></li>
+                <li>Clique em <strong>"Verificar"</strong> para comparar sua saída com a esperada</li>
+            </ol>
+            <div class="highlight-box blue">
+                💡 <strong>DICA:</strong> Você pode testar seu código diretamente no console do navegador (F12) ou no <a href="https://onecompiler.com/javascript" target="_blank">OneCompiler</a>.
+                <br><br>
+                ⚠️ <strong>IMPORTANTE:</strong> Cole apenas a <strong>saída do console</strong>, não o código!
+            </div>
+        </div>
+
+        <!-- ============================================================
+        ATIVIDADE 1
+        ============================================================ -->
+        <div class="card">
+            <h2>📌 Atividades</h2>
+
+            <div class="atividade" id="atv1">
+                <div>
+                    <span class="numero">1</span>
+                    <span class="titulo">Operações com dois números</span>
+                    <span class="topico">Variáveis e Operadores</span>
+                </div>
+
+                <div class="enunciado">
+                    <p><strong>📌 Enunciado:</strong></p>
+                    <p>Considerando os valores <span class="dados">num1 = 10</span> e <span class="dados">num2 = 5</span>, calcule e mostre:</p>
+                    <ul>
+                        <li>A <strong>soma</strong> dos dois números</li>
+                        <li>A <strong>subtração</strong> do primeiro pelo segundo</li>
+                        <li>A <strong>multiplicação</strong> dos dois números</li>
+                        <li>A <strong>divisão</strong> do primeiro pelo segundo</li>
+                    </ul>
+                    <p><strong>Use <code>console.log()</code> para exibir os resultados.</strong></p>
+                </div>
+
+                <div class="saida">
+                    <span class="rotulo">✅ Saída Esperada</span>
+                    Soma: 15
+                    Subtração: 5
+                    Multiplicação: 50
+                    Divisão: 2
+                </div>
+
+                <div class="dica">
+                    💡 <strong>Dica:</strong> Atribua os valores diretamente às variáveis: <code>let num1 = 10;</code>
+                </div>
+
+                <div class="campo-saida">
+                    <label>📤 Saída do seu código (cole a saída do console):</label>
+                    <textarea id="saida1" placeholder="Cole aqui a saída do console..." class="correct disabled" disabled=""></textarea>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-sm" onclick="verificarAtividade(1)">✅ Verificar</button>
+                    <button class="btn btn-sm btn-secondary" onclick="limparResposta(1)">🔄 Limpar</button>
+                </div>
+
+                <div id="feedback1" style="margin-top: 8px;">
+                <div class="highlight-box green" style="margin-top: 8px;">
+                    <strong>🎉 Perfeito! A saída corresponde exatamente à esperada!</strong>
+                    
+                <div class="comparacao">
+                    <div class="esperado">
+                        <div class="rotulo-comp">📋 Saída Esperada:</div>
+                        <div class="texto-esperado">Soma: 15
+Subtração: 5
+Multiplicação: 50
+Divisão: 2</div>
+                    </div>
+                    <div class="obtido">
+                        <div class="rotulo-comp">📤 Sua Saída:</div>
+                        <div class="texto-obtido ">Soma: 15
+                    Subtração: 5
+                    Multiplicação: 50
+                    Divisão: 2</div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+            </div>
+
+            <!-- ============================================================
+            ATIVIDADE 2
+            ============================================================ -->
+            <div class="atividade" id="atv2">
+                <div>
+                    <span class="numero">2</span>
+                    <span class="titulo">Maior ou menor de idade</span>
+                    <span class="topico">Condicional (if/else)</span>
+                </div>
+
+                <div class="enunciado">
+                    <p><strong>📌 Enunciado:</strong></p>
+                    <p>Considerando a variável <span class="dados">idade = 20</span>, informe se a pessoa é <strong>maior de idade</strong> (18 anos ou mais) ou <strong>menor de idade</strong>.</p>
+                    <p><strong>Use <code>console.log()</code> para exibir a mensagem.</strong></p>
+                </div>
+
+                <div class="saida">
+                    <span class="rotulo">✅ Saída Esperada</span>
+                    Você é maior de idade!
+                </div>
+
+                <div class="dica">
+                    💡 <strong>Dica:</strong> Use <code>if (idade &gt;= 18)</code> para verificar.
+                </div>
+
+                <div class="campo-saida">
+                    <label>📤 Saída do seu código (cole a saída do console):</label>
+                    <textarea id="saida2" placeholder="Cole aqui a saída do console..." class="correct disabled" disabled=""></textarea>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-sm" onclick="verificarAtividade(2)">✅ Verificar</button>
+                    <button class="btn btn-sm btn-secondary" onclick="limparResposta(2)">🔄 Limpar</button>
+                </div>
+
+                <div id="feedback2" style="margin-top: 8px;">
+                <div class="highlight-box green" style="margin-top: 8px;">
+                    <strong>🎉 Perfeito! A saída corresponde exatamente à esperada!</strong>
+                    
+                <div class="comparacao">
+                    <div class="esperado">
+                        <div class="rotulo-comp">📋 Saída Esperada:</div>
+                        <div class="texto-esperado">Você é maior de idade!</div>
+                    </div>
+                    <div class="obtido">
+                        <div class="rotulo-comp">📤 Sua Saída:</div>
+                        <div class="texto-obtido ">Você é maior de idade!</div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+            </div>
+
+            <!-- ============================================================
+            ATIVIDADE 3
+            ============================================================ -->
+            <div class="atividade" id="atv3">
+                <div>
+                    <span class="numero">3</span>
+                    <span class="titulo">Conceito da nota</span>
+                    <span class="topico">Condicional Múltipla</span>
+                </div>
+
+                <div class="enunciado">
+                    <p><strong>📌 Enunciado:</strong></p>
+                    <p>Considerando a variável <span class="dados">nota = 8.5</span>, mostre o conceito conforme a tabela:</p>
+                    <ul>
+                        <li><strong>A</strong> → nota maior ou igual a 9</li>
+                        <li><strong>B</strong> → nota maior ou igual a 7 e menor que 9</li>
+                        <li><strong>C</strong> → nota maior ou igual a 5 e menor que 7</li>
+                        <li><strong>D</strong> → nota menor que 5</li>
+                    </ul>
+                    <p><strong>Use <code>console.log()</code> para exibir o conceito.</strong></p>
+                </div>
+
+                <div class="saida">
+                    <span class="rotulo">✅ Saída Esperada</span>
+                    Conceito: B
+                </div>
+
+                <div class="dica">
+                    💡 <strong>Dica:</strong> Use <code>else if</code> para verificar as faixas de valores.
+                </div>
+
+                <div class="campo-saida">
+                    <label>📤 Saída do seu código (cole a saída do console):</label>
+                    <textarea id="saida3" placeholder="Cole aqui a saída do console..." class="correct disabled" disabled=""></textarea>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-sm" onclick="verificarAtividade(3)">✅ Verificar</button>
+                    <button class="btn btn-sm btn-secondary" onclick="limparResposta(3)">🔄 Limpar</button>
+                </div>
+
+                <div id="feedback3" style="margin-top: 8px;">
+                <div class="highlight-box green" style="margin-top: 8px;">
+                    <strong>🎉 Perfeito! A saída corresponde exatamente à esperada!</strong>
+                    
+                <div class="comparacao">
+                    <div class="esperado">
+                        <div class="rotulo-comp">📋 Saída Esperada:</div>
+                        <div class="texto-esperado">Conceito: B</div>
+                    </div>
+                    <div class="obtido">
+                        <div class="rotulo-comp">📤 Sua Saída:</div>
+                        <div class="texto-obtido ">Conceito: B</div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+            </div>
+
+            <!-- ============================================================
+            ATIVIDADE 4
+            ============================================================ -->
+            <div class="atividade" id="atv4">
+                <div>
+                    <span class="numero">4</span>
+                    <span class="titulo">Números de 1 a 10</span>
+                    <span class="topico">Laço de Repetição (for)</span>
+                </div>
+
+                <div class="enunciado">
+                    <p><strong>📌 Enunciado:</strong></p>
+                    <p>Escreva um programa que mostre os <strong>números de 1 a 10</strong> no console.</p>
+                    <p>Use o laço <code>for</code> para fazer a repetição.</p>
+                    <p><strong>Cada número deve aparecer em uma linha.</strong></p>
+                </div>
+
+                <div class="saida">
+                    <span class="rotulo">✅ Saída Esperada</span>
+                    1
+                    2
+                    3
+                    4
+                    5
+                    6
+                    7
+                    8
+                    9
+                    10
+                </div>
+
+                <div class="dica">
+                    💡 <strong>Dica:</strong> O <code>for</code> precisa de três partes: início, condição e incremento.
+                </div>
+
+                <div class="campo-saida">
+                    <label>📤 Saída do seu código (cole a saída do console):</label>
+                    <textarea id="saida4" placeholder="Cole aqui a saída do console..." class="correct disabled" disabled=""></textarea>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-sm" onclick="verificarAtividade(4)">✅ Verificar</button>
+                    <button class="btn btn-sm btn-secondary" onclick="limparResposta(4)">🔄 Limpar</button>
+                </div>
+
+                <div id="feedback4" style="margin-top: 8px;">
+                <div class="highlight-box green" style="margin-top: 8px;">
+                    <strong>🎉 Perfeito! A saída corresponde exatamente à esperada!</strong>
+                    
+                <div class="comparacao">
+                    <div class="esperado">
+                        <div class="rotulo-comp">📋 Saída Esperada:</div>
+                        <div class="texto-esperado">1
+2
+3
+4
+5
+6
+7
+8
+9
+10</div>
+                    </div>
+                    <div class="obtido">
+                        <div class="rotulo-comp">📤 Sua Saída:</div>
+                        <div class="texto-obtido ">1
+                    2
+                    3
+                    4
+                    5
+                    6
+                    7
+                    8
+                    9
+                    10</div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+            </div>
+
+            <!-- ============================================================
+            ATIVIDADE 5
+            ============================================================ -->
+            <div class="atividade" id="atv5">
+                <div>
+                    <span class="numero">5</span>
+                    <span class="titulo">Números de 10 a 1</span>
+                    <span class="topico">Laço de Repetição (while)</span>
+                </div>
+
+                <div class="enunciado">
+                    <p><strong>📌 Enunciado:</strong></p>
+                    <p>Crie um programa que mostre os <strong>números de 10 a 1</strong> (decrescente) usando o laço <code>while</code>.</p>
+                    <p><strong>Cada número deve aparecer em uma linha.</strong></p>
+                </div>
+
+                <div class="saida">
+                    <span class="rotulo">✅ Saída Esperada</span>
+                    10
+                    9
+                    8
+                    7
+                    6
+                    5
+                    4
+                    3
+                    2
+                    1
+                </div>
+
+                <div class="dica">
+                    💡 <strong>Dica:</strong> Comece com <code>let i = 10</code> e decremente até chegar a 1.
+                </div>
+
+                <div class="campo-saida">
+                    <label>📤 Saída do seu código (cole a saída do console):</label>
+                    <textarea id="saida5" placeholder="Cole aqui a saída do console..." class="correct disabled" disabled=""></textarea>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-sm" onclick="verificarAtividade(5)">✅ Verificar</button>
+                    <button class="btn btn-sm btn-secondary" onclick="limparResposta(5)">🔄 Limpar</button>
+                </div>
+
+                <div id="feedback5" style="margin-top: 8px;">
+                <div class="highlight-box green" style="margin-top: 8px;">
+                    <strong>🎉 Perfeito! A saída corresponde exatamente à esperada!</strong>
+                    
+                <div class="comparacao">
+                    <div class="esperado">
+                        <div class="rotulo-comp">📋 Saída Esperada:</div>
+                        <div class="texto-esperado">10
+9
+8
+7
+6
+5
+4
+3
+2
+1</div>
+                    </div>
+                    <div class="obtido">
+                        <div class="rotulo-comp">📤 Sua Saída:</div>
+                        <div class="texto-obtido ">10
+                    9
+                    8
+                    7
+                    6
+                    5
+                    4
+                    3
+                    2
+                    1</div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+            </div>
+
+            <!-- ============================================================
+            ATIVIDADE 6
+            ============================================================ -->
+            <div class="atividade" id="atv6">
+                <div>
+                    <span class="numero">6</span>
+                    <span class="titulo">Soma de 1 a 100</span>
+                    <span class="topico">Laço com Acumulador</span>
+                </div>
+
+                <div class="enunciado">
+                    <p><strong>📌 Enunciado:</strong></p>
+                    <p>Faça um programa que calcule a <strong>soma dos números de 1 a 100</strong>.</p>
+                    <p>Use um laço <code>for</code> e uma variável <code>soma</code> para acumular os valores.</p>
+                    <p><strong>Exiba o resultado no console.</strong></p>
+                </div>
+
+                <div class="saida">
+                    <span class="rotulo">✅ Saída Esperada</span>
+                    Soma de 1 a 100: 5050
+                </div>
+
+                <div class="dica">
+                    💡 <strong>Dica:</strong> Use <code>soma += i</code> dentro do laço.
+                </div>
+
+                <div class="campo-saida">
+                    <label>📤 Saída do seu código (cole a saída do console):</label>
+                    <textarea id="saida6" placeholder="Cole aqui a saída do console..." class="correct disabled" disabled=""></textarea>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-sm" onclick="verificarAtividade(6)">✅ Verificar</button>
+                    <button class="btn btn-sm btn-secondary" onclick="limparResposta(6)">🔄 Limpar</button>
+                </div>
+
+                <div id="feedback6" style="margin-top: 8px;">
+                <div class="highlight-box green" style="margin-top: 8px;">
+                    <strong>🎉 Perfeito! A saída corresponde exatamente à esperada!</strong>
+                    
+                <div class="comparacao">
+                    <div class="esperado">
+                        <div class="rotulo-comp">📋 Saída Esperada:</div>
+                        <div class="texto-esperado">Soma de 1 a 100: 5050</div>
+                    </div>
+                    <div class="obtido">
+                        <div class="rotulo-comp">📤 Sua Saída:</div>
+                        <div class="texto-obtido ">Soma de 1 a 100: 5050</div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+            </div>
+
+            <!-- ============================================================
+            ATIVIDADE 7
+            ============================================================ -->
+            <div class="atividade" id="atv7">
+                <div>
+                    <span class="numero">7</span>
+                    <span class="titulo">Lista de Cores</span>
+                    <span class="topico">Arrays</span>
+                </div>
+
+                <div class="enunciado">
+                    <p><strong>📌 Enunciado:</strong></p>
+                    <p>Crie um programa com um <strong>array de 4 cores</strong> (Vermelho, Azul, Verde, Amarelo) e mostre todas elas no console, uma por linha.</p>
+                    <p>Use um laço <code>for</code> para percorrer o array.</p>
+                </div>
+
+                <div class="saida">
+                    <span class="rotulo">✅ Saída Esperada</span>
+                    Vermelho
+                    Azul
+                    Verde
+                    Amarelo
+                </div>
+
+                <div class="dica">
+                    💡 <strong>Dica:</strong> Use <code>cores.length</code> para saber o tamanho do array.
+                </div>
+
+                <div class="campo-saida">
+                    <label>📤 Saída do seu código (cole a saída do console):</label>
+                    <textarea id="saida7" placeholder="Cole aqui a saída do console..." class="correct disabled" disabled=""></textarea>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-sm" onclick="verificarAtividade(7)">✅ Verificar</button>
+                    <button class="btn btn-sm btn-secondary" onclick="limparResposta(7)">🔄 Limpar</button>
+                </div>
+
+                <div id="feedback7" style="margin-top: 8px;">
+                <div class="highlight-box green" style="margin-top: 8px;">
+                    <strong>🎉 Perfeito! A saída corresponde exatamente à esperada!</strong>
+                    
+                <div class="comparacao">
+                    <div class="esperado">
+                        <div class="rotulo-comp">📋 Saída Esperada:</div>
+                        <div class="texto-esperado">Vermelho
+Azul
+Verde
+Amarelo</div>
+                    </div>
+                    <div class="obtido">
+                        <div class="rotulo-comp">📤 Sua Saída:</div>
+                        <div class="texto-obtido ">Vermelho
+                    Azul
+                    Verde
+                    Amarelo</div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+            </div>
+
+            <!-- ============================================================
+            ATIVIDADE 8
+            ============================================================ -->
+            <div class="atividade" id="atv8">
+                <div>
+                    <span class="numero">8</span>
+                    <span class="titulo">Dobro de um número</span>
+                    <span class="topico">Funções Simples</span>
+                </div>
+
+                <div class="enunciado">
+                    <p><strong>📌 Enunciado:</strong></p>
+                    <p>Crie uma função chamada <code>dobro</code> que recebe um <strong>número</strong> e retorna o <strong>dobro</strong> dele.</p>
+                    <p>Depois, chame a função com os valores <span class="dados">5</span> e <span class="dados">7</span> e exiba os resultados no console.</p>
+                </div>
+
+                <div class="saida">
+                    <span class="rotulo">✅ Saída Esperada</span>
+                    10
+                    14
+                </div>
+
+                <div class="dica">
+                    💡 <strong>Dica:</strong> Use <code>function dobro(numero) { return numero * 2; }</code>
+                </div>
+
+                <div class="campo-saida">
+                    <label>📤 Saída do seu código (cole a saída do console):</label>
+                    <textarea id="saida8" placeholder="Cole aqui a saída do console..." class="correct disabled" disabled=""></textarea>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-sm" onclick="verificarAtividade(8)">✅ Verificar</button>
+                    <button class="btn btn-sm btn-secondary" onclick="limparResposta(8)">🔄 Limpar</button>
+                </div>
+
+                <div id="feedback8" style="margin-top: 8px;">
+                <div class="highlight-box green" style="margin-top: 8px;">
+                    <strong>🎉 Perfeito! A saída corresponde exatamente à esperada!</strong>
+                    
+                <div class="comparacao">
+                    <div class="esperado">
+                        <div class="rotulo-comp">📋 Saída Esperada:</div>
+                        <div class="texto-esperado">10
+14</div>
+                    </div>
+                    <div class="obtido">
+                        <div class="rotulo-comp">📤 Sua Saída:</div>
+                        <div class="texto-obtido ">10 
+                    14</div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+            </div>
+
+            <!-- ============================================================
+            ATIVIDADE 9
+            ============================================================ -->
+            <div class="atividade" id="atv9">
+                <div>
+                    <span class="numero">9</span>
+                    <span class="titulo">Par ou Ímpar</span>
+                    <span class="topico">Função com Condicional</span>
+                </div>
+
+                <div class="enunciado">
+                    <p><strong>📌 Enunciado:</strong></p>
+                    <p>Crie uma função chamada <code>parOuImpar</code> que recebe um <strong>número</strong> e retorna a string <strong>"Par"</strong> ou <strong>"Ímpar"</strong>.</p>
+                    <p>Depois, chame a função com os valores <span class="dados">4</span> e <span class="dados">7</span> e exiba os resultados no console.</p>
+                </div>
+
+                <div class="saida">
+                    <span class="rotulo">✅ Saída Esperada</span>
+                    Par
+                    Ímpar
+                </div>
+
+                <div class="dica">
+                    💡 <strong>Dica:</strong> Use o operador <code>%</code> para verificar se o número é divisível por 2.
+                </div>
+
+                <div class="campo-saida">
+                    <label>📤 Saída do seu código (cole a saída do console):</label>
+                    <textarea id="saida9" placeholder="Cole aqui a saída do console..." class="correct disabled" disabled=""></textarea>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-sm" onclick="verificarAtividade(9)">✅ Verificar</button>
+                    <button class="btn btn-sm btn-secondary" onclick="limparResposta(9)">🔄 Limpar</button>
+                </div>
+
+                <div id="feedback9" style="margin-top: 8px;">
+                <div class="highlight-box green" style="margin-top: 8px;">
+                    <strong>🎉 Perfeito! A saída corresponde exatamente à esperada!</strong>
+                    
+                <div class="comparacao">
+                    <div class="esperado">
+                        <div class="rotulo-comp">📋 Saída Esperada:</div>
+                        <div class="texto-esperado">Par
+Ímpar</div>
+                    </div>
+                    <div class="obtido">
+                        <div class="rotulo-comp">📤 Sua Saída:</div>
+                        <div class="texto-obtido ">Par
+                    Ímpar</div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+            </div>
+
+            <!-- ============================================================
+            ATIVIDADE 10
+            ============================================================ -->
+            <div class="atividade" id="atv10">
+                <div>
+                    <span class="numero">10</span>
+                    <span class="titulo">Soma de um array</span>
+                    <span class="topico">Função com Arrays</span>
+                </div>
+
+                <div class="enunciado">
+                    <p><strong>📌 Enunciado:</strong></p>
+                    <p>Crie uma função chamada <code>somaArray</code> que recebe um <strong>array de números</strong> e retorna a <strong>soma</strong> de todos os elementos.</p>
+                    <p>Depois, chame a função com os arrays <span class="dados">[1, 2, 3, 4]</span> e <span class="dados">[10, 20, 30]</span> e exiba os resultados no console.</p>
+                </div>
+
+                <div class="saida">
+                    <span class="rotulo">✅ Saída Esperada</span>
+                    10
+                    60
+                </div>
+
+                <div class="dica">
+                    💡 <strong>Dica:</strong> Percorra o array com um laço <code>for</code> e acumule os valores em uma variável.
+                </div>
+
+                <div class="campo-saida">
+                    <label>📤 Saída do seu código (cole a saída do console):</label>
+                    <textarea id="saida10" placeholder="Cole aqui a saída do console..." class="correct disabled" disabled=""></textarea>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-sm" onclick="verificarAtividade(10)">✅ Verificar</button>
+                    <button class="btn btn-sm btn-secondary" onclick="limparResposta(10)">🔄 Limpar</button>
+                </div>
+
+                <div id="feedback10" style="margin-top: 8px;">
+                <div class="highlight-box green" style="margin-top: 8px;">
+                    <strong>🎉 Perfeito! A saída corresponde exatamente à esperada!</strong>
+                    
+                <div class="comparacao">
+                    <div class="esperado">
+                        <div class="rotulo-comp">📋 Saída Esperada:</div>
+                        <div class="texto-esperado">10
+60</div>
+                    </div>
+                    <div class="obtido">
+                        <div class="rotulo-comp">📤 Sua Saída:</div>
+                        <div class="texto-obtido ">10
+                    60</div>
+                    </div>
+                </div>
+            
+                </div>
+            </div>
+            </div>
+
+            <!-- BOTÕES GERAIS -->
+            <div style="text-align: center; margin-top: 20px;" class="no-print">
+                <button class="btn" onclick="verificarTodas()">✅ Verificar todas</button>
+                <button class="btn btn-secondary" onclick="limparTodas()">🔄 Limpar todas</button>
+                <button class="btn btn-danger" onclick="recomecar()">🔁 Recomeçar</button>
+            </div>
+
+            <!-- RESULTADO GERAL -->
+            <div class="result-box show" id="resultadoGeral">
+                <h2>📊 Resultado Final</h2>
+                <div class="score" id="pontuacaoGeral">10 / 10</div>
+                <div id="feedbackGeral"><div class="resultado-item correct">✅ Atividade 1 - Correta</div><div class="resultado-item correct">✅ Atividade 2 - Correta</div><div class="resultado-item correct">✅ Atividade 3 - Correta</div><div class="resultado-item correct">✅ Atividade 4 - Correta</div><div class="resultado-item correct">✅ Atividade 5 - Correta</div><div class="resultado-item correct">✅ Atividade 6 - Correta</div><div class="resultado-item correct">✅ Atividade 7 - Correta</div><div class="resultado-item correct">✅ Atividade 8 - Correta</div><div class="resultado-item correct">✅ Atividade 9 - Correta</div><div class="resultado-item correct">✅ Atividade 10 - Correta</div></div>
+                <div style="margin-top: 15px;" class="no-print">
+                    <button class="btn btn-success" onclick="window.print()">🖨️ Imprimir Resultado (PDF)</button>
+                    <button class="btn btn-danger" onclick="recomecar()">🔁 Recomeçar</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer no-print">
+            <p>📝 10 Atividades - Lógica Básica | Variáveis, Condicionais, Laços, Arrays e Funções</p>
+        </div>
+
+    </div>
+
+    <!-- BOTÃO TOPO -->
+    <button class="btn-top no-print" onclick="window.scrollTo({top: 0, behavior: &#39;smooth&#39;})">⬆️ Topo</button>
+
+    <!-- ============================================================
+    SCRIPTS
+    ============================================================ -->
+    <script>
+        // ============================================================
+        // SAÍDAS ESPERADAS (GABARITO)
+        // ============================================================
+        const saidasEsperadas = {
+            1: `Soma: 15\nSubtração: 5\nMultiplicação: 50\nDivisão: 2`,
+            2: `Você é maior de idade!`,
+            3: `Conceito: B`,
+            4: `1\n2\n3\n4\n5\n6\n7\n8\n9\n10`,
+            5: `10\n9\n8\n7\n6\n5\n4\n3\n2\n1`,
+            6: `Soma de 1 a 100: 5050`,
+            7: `Vermelho\nAzul\nVerde\nAmarelo`,
+            8: `10\n14`,
+            9: `Par\nÍmpar`,
+            10: `10\n60`
+        };
+
+        // ============================================================
+        // FUNÇÃO DE NORMALIZAÇÃO
+        // ============================================================
+        function normalizarSaida(texto) {
+            return texto
+                .trim()
+                .replace(/\r\n/g, '\n')
+                .replace(/\s+/g, ' ')
+                .replace(/[^\w\s:\-\.]/g, '')
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
+        // ============================================================
+        // VERIFICAR ATIVIDADE
+        // ============================================================
+        function verificarAtividade(num) {
+            const saidaTextarea = document.getElementById('saida' + num);
+            const feedback = document.getElementById('feedback' + num);
+
+            const saida = saidaTextarea.value.trim();
+
+            if (saida === '') {
+                feedback.innerHTML = '<div class="highlight-box orange">⚠️ Cole a saída do seu código antes de verificar!</div>';
+                return;
+            }
+
+            const esperado = saidasEsperadas[num];
+            const saidaNormalizada = normalizarSaida(saida);
+            const esperadoNormalizado = normalizarSaida(esperado);
+
+            const isCorrect = saidaNormalizada === esperadoNormalizado;
+
+            // Monta a comparação visual
+            const comparacao = `
+                <div class="comparacao">
+                    <div class="esperado">
+                        <div class="rotulo-comp">📋 Saída Esperada:</div>
+                        <div class="texto-esperado">${esperado}</div>
+                    </div>
+                    <div class="obtido">
+                        <div class="rotulo-comp">📤 Sua Saída:</div>
+                        <div class="texto-obtido ${isCorrect ? '' : 'diferente'}">${saida || '(vazio)'}</div>
+                    </div>
+                </div>
+            `;
+
+            let status = '';
+            let cor = '';
+
+            if (isCorrect) {
+                status = '🎉 Perfeito! A saída corresponde exatamente à esperada!';
+                cor = 'green';
+                saidaTextarea.className = 'correct';
+                saidaTextarea.disabled = true;
+                saidaTextarea.classList.add('disabled');
+            } else {
+                status = '🔁 A saída não corresponde ao esperado. Verifique seu código!';
+                cor = 'red';
+                saidaTextarea.className = 'wrong';
+                saidaTextarea.disabled = false;
+
+                // Encontra diferenças linha por linha
+                const linhasEsperadas = esperadoNormalizado.split('\n');
+                const linhasObtidas = saidaNormalizada.split('\n');
+                let linhasDiferentes = [];
+
+                for (let i = 0; i < Math.max(linhasEsperadas.length, linhasObtidas.length); i++) {
+                    const linhaEsp = i < linhasEsperadas.length ? linhasEsperadas[i] : '(linha extra)';
+                    const linhaObt = i < linhasObtidas.length ? linhasObtidas[i] : '(linha faltando)';
+                    if (linhaEsp !== linhaObt) {
+                        linhasDiferentes.push(`Linha ${i+1}: esperado "${linhaEsp}" | obtido "${linhaObt}"`);
+                    }
+                }
+
+                let dicasExtras = '';
+                if (linhasDiferentes.length > 0) {
+                    dicasExtras = `
+                        <div style="margin-top: 8px; font-size: 0.85rem;">
+                            <strong>🔍 Diferenças encontradas:</strong>
+                            <div style="background: #f8f9fa; padding: 6px 10px; border-radius: 4px; margin-top: 4px; font-family: monospace; font-size: 0.8rem; max-height: 150px; overflow-y: auto;">
+                                ${linhasDiferentes.join('<br>')}
+                            </div>
+                            <div style="margin-top: 4px; font-size: 0.8rem; color: #6c757d;">
+                                💡 Verifique se seu código está produzindo exatamente o texto esperado, incluindo espaços e pontuação.
+                            </div>
+                        </div>
+                    `;
+                }
+
+                feedback.innerHTML = `
+                    <div class="highlight-box ${cor}" style="margin-top: 8px;">
+                        <strong>${status}</strong>
+                        ${comparacao}
+                        ${dicasExtras}
+                    </div>
+                `;
+                return;
+            }
+
+            feedback.innerHTML = `
+                <div class="highlight-box ${cor}" style="margin-top: 8px;">
+                    <strong>${status}</strong>
+                    ${comparacao}
+                </div>
+            `;
+        }
+
+        // ============================================================
+        // VERIFICAR TODAS
+        // ============================================================
+        function verificarTodas() {
+            let total = 0;
+            let acertos = 0;
+            let feedbackHTML = '';
+
+            for (let i = 1; i <= 10; i++) {
+                const saidaTextarea = document.getElementById('saida' + i);
+                const saida = saidaTextarea.value.trim();
+
+                if (saida === '') {
+                    feedbackHTML += `<div class="resultado-item wrong">❌ Atividade ${i} - Não respondida</div>`;
+                    continue;
+                }
+
+                total++;
+                const esperado = saidasEsperadas[i];
+                const saidaNormalizada = normalizarSaida(saida);
+                const esperadoNormalizado = normalizarSaida(esperado);
+
+                const isCorrect = saidaNormalizada === esperadoNormalizado;
+
+                if (isCorrect) {
+                    acertos++;
+                    feedbackHTML += `<div class="resultado-item correct">✅ Atividade ${i} - Correta</div>`;
+                    saidaTextarea.className = 'correct';
+                    saidaTextarea.disabled = true;
+                    saidaTextarea.classList.add('disabled');
+                } else {
+                    feedbackHTML += `<div class="resultado-item wrong">❌ Atividade ${i} - Incorreta</div>`;
+                    saidaTextarea.className = 'wrong';
+                    saidaTextarea.disabled = false;
+                }
+            }
+
+            document.getElementById('pontuacaoGeral').textContent = acertos + ' / ' + total;
+            document.getElementById('feedbackGeral').innerHTML = feedbackHTML;
+            document.getElementById('resultadoGeral').classList.add('show');
+
+            document.getElementById('resultadoGeral').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // ============================================================
+        // LIMPAR RESPOSTA
+        // ============================================================
+        function limparResposta(num) {
+            const saidaTextarea = document.getElementById('saida' + num);
+            const feedback = document.getElementById('feedback' + num);
+
+            saidaTextarea.value = '';
+            saidaTextarea.disabled = false;
+            saidaTextarea.className = '';
+            saidaTextarea.classList.remove('correct', 'wrong', 'disabled');
+            feedback.innerHTML = '';
+        }
+
+        // ============================================================
+        // LIMPAR TODAS
+        // ============================================================
+        function limparTodas() {
+            for (let i = 1; i <= 10; i++) {
+                limparResposta(i);
+            }
+            document.getElementById('resultadoGeral').classList.remove('show');
+        }
+
+        // ============================================================
+        // RECOMEÇAR
+        // ============================================================
+        function recomecar() {
+            if (confirm('🔁 Tem certeza que deseja recomeçar? Todas as respostas serão apagadas.')) {
+                limparTodas();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+    </script>
+
+
+
+</body></html>
